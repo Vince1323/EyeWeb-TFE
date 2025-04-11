@@ -1,0 +1,232 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+
+<div class="grid" *ngIf="patient">
+    <div class="col">
+        <div class="card mb-0">
+            <div class="p-fluid p-formgrid grid">
+                
+                <!-- Firstname -->
+                <div class="field col-12 md:col-6">
+                    <label for="firstname">Firstname</label>
+                    <input pInputText id="firstname" type="text" [(ngModel)]="patient.firstname"
+                           [disabled]="!isEditMode"/>
+                    
+                    <small class="p-error" *ngIf="!isValidFirstname && isEditMode">
+                        Firstname is invalid. Only letters, spaces, hyphens, or apostrophes are allowed.
+                    </small>
+                </div>
+
+                <!-- Lastname -->
+                <div class="field col-12 md:col-6">
+                    <label for="lastname">Lastname</label>
+                    <input pInputText id="lastname" type="text" [(ngModel)]="patient.lastname"
+                           [disabled]="!isEditMode"/>
+                    
+                    <small class="p-error" *ngIf="!isValidLastname && isEditMode">
+                        Lastname is invalid. Only letters, spaces, hyphens, or apostrophes are allowed.
+                    </small>
+                </div>
+
+                <!-- SSN -->
+                <div class="field col-12 md:col-4">
+                    <label for="ssn">SSN</label>
+                    <p-inputMask mask="99.99.99-999.99"
+                                 [(ngModel)]="patient.niss"
+                                 placeholder="00.00.00-000.00"
+                                 [disabled]="!isEditMode">
+                    </p-inputMask>
+                    
+                    <small class="p-error" *ngIf="!isValidSSN && isEditMode">
+                        SSN must follow this format: XX.XX.XX-XXX.XX.
+                    </small>                    
+                </div>
+
+                <!-- Birthdate -->
+                <div class="field col-12 md:col-4">
+                    <label for="birthDate">Date of birth</label>
+                    <p-calendar [(ngModel)]="birthDateValue" 
+                                [showIcon]="true" 
+                                icon="pi pi-calendar" 
+                                dateFormat="dd-mm-yy" 
+                                placeholder="YYYY-MM-DD"
+                                appendTo="body"
+                                [disabled]="!isEditMode">
+                    </p-calendar>
+                </div>
+
+                <!-- Gender -->
+                <div class="field col-12 md:col-4">
+                    <label for="gender">Gender</label>
+                    <p-dropdown id="gender"
+                                [options]="genderOptions"
+                                [(ngModel)]="patient.gender"
+                                placeholder="Select Gender"
+                                [disabled]="!isEditMode">
+                    </p-dropdown>
+                    
+                    <small class="p-error" *ngIf="!isValidGender && isEditMode">
+                        Gender must be "MALE" or "FEMALE".
+                    </small>
+                </div>
+
+                <!-- Address -->
+                <ng-container *ngIf="patient.address">
+                    <div class="field col-12 md:col-8">
+                        <label for="address">Address</label>
+                        <input pInputText id="address" type="text" [(ngModel)]="patient.address.street"
+                               [disabled]="!isEditMode"/>
+                        
+                        <small class="p-error" *ngIf="!isValidAddress && isEditMode">
+                            Address must contain only letters.
+                        </small>                        
+                    </div>
+                    <div class="field col-12 md:col-2">
+                        <label for="streetNumber">Street Number</label>
+                        <input pInputText id="streetNumber" type="text" [(ngModel)]="patient.address.streetNumber"
+                               [disabled]="!isEditMode"/>
+                        
+                        <small class="p-error" *ngIf="!isValidStreetNumber && isEditMode">
+                            Street number must contain only numbers.
+                        </small>                        
+                    </div>
+                    <div class="field col-12 md:col-2">
+                        <label for="boxNumber">Box Number</label>
+                        <input pInputText id="boxNumber" type="text" [(ngModel)]="patient.address.boxNumber"
+                               [disabled]="!isEditMode"/>
+                        
+                        <small class="p-error" *ngIf="!isValidBoxNumber && isEditMode">
+                            Box number must contain only numbers.
+                        </small>                        
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label for="zip">Zip</label>
+                        <input pInputText id="zip" type="text" [(ngModel)]="patient.address.zipCode"
+                               [disabled]="!isEditMode"/>
+                        
+                        <small class="p-error" *ngIf="!isValidZip && isEditMode">
+                            Zip code must contain only numbers.
+                        </small>                        
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label for="city">City</label>
+                        <input pInputText id="city" type="text" [(ngModel)]="patient.address.city"
+                               [disabled]="!isEditMode"/>
+                        
+                        <small class="p-error" *ngIf="!isValidCity && isEditMode">
+                            City must contain only letters.
+                        </small>        
+                    </div>
+                    <div class="field col-12 md:col-4">
+                        <label for="country">Country</label>
+                        <input pInputText id="country" type="text" [(ngModel)]="patient.address.country"
+                               [disabled]="!isEditMode"/>
+                        
+                        <small class="p-error" *ngIf="!isValidCountry && isEditMode">
+                            Country must contain only letters.
+                        </small>        
+                    </div>
+                </ng-container>
+
+                <!-- Contact Information -->
+                <div class="field col-12 md:col-6">
+                    <label for="phone">Phone number</label>
+                    <input pInputText id="phone" type="text" [(ngModel)]="patient.phone"
+                           [disabled]="!isEditMode"/>
+                    
+                    <small class="p-error" *ngIf="!isValidPhoneNumber && isEditMode">
+                        Phone number must contain only numbers, spaces, +, or -.
+                    </small>                                   
+                </div>
+                <div class="field col-12 md:col-6">
+                    <label for="email">Email</label>
+                    <input pInputText id="email" type="text" [(ngModel)]="patient.mail"
+                           [disabled]="!isEditMode"/>
+                    
+                    <small class="p-error" *ngIf="!isValidEmail && isEditMode">
+                        Invalid email format.
+                    </small>   
+                </div>
+
+    
+
+                <!-- Dropdown Fields -->
+                <div class="field col-12 md:col-4">
+                    <label for="mutuality">Mutuality</label>
+                    <p-dropdown optionLabel="name" [disabled]="!isEditMode"></p-dropdown> <!--[(ngModel)]="patient.mutuality" [options]="mutualities" -->
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="insurance">Insurance</label>
+                    <p-dropdown optionLabel="name" [disabled]="!isEditMode"></p-dropdown> <!--[(ngModel)]="patient.insurance" [options]="insurances" -->
+                </div>
+                <div class="field col-12 md:col-4">
+                    <label for="practitioner">General Practitioner</label>
+                    <p-dropdown optionLabel="name" [disabled]="!isEditMode"></p-dropdown> <!--[(ngModel)]="patient.practitioner" [options]="practitioners" -->
+                </div>
+
+                     <!-- Conteneur principal des boutons -->
+                     <div class="button-container field col-12 md:col-12" style="display: flex; gap: 0px; flex-wrap: wrap; width: 100%;">
+                    
+                        <!-- Mode normal -->
+                        <ng-container *ngIf="!isEditMode">
+                            <div class="field col-12 md:col-6">
+                                <p-button label="Edit" 
+                                    icon="pi pi-pencil" 
+                                    (click)="toggleEditMode()"
+                                    [style]="{'width': '100%'}">
+                                </p-button>
+                            </div>
+    
+                            <div class="field col-12 md:col-6">
+                                <p-button label="Delete" 
+                                    icon="pi pi-trash" 
+                                    severity="danger" 
+                                    (click)="deletePatient()"
+                                    [style]="{'width': '100%'}">
+                                </p-button>
+                            </div>
+                        </ng-container>
+    
+                        <!-- Mode édition -->
+                        <ng-container *ngIf="isEditMode">
+                            <div class="field col-12 md:col-3">
+                                <p-button label="Edit" 
+                                    icon="pi pi-pencil" 
+                                    [disabled]="true" 
+                                    [style]="{'width': '100%'}">
+                                </p-button>
+                            </div>
+    
+                            <div class="field col-12 md:col-3">
+                                <p-button label="Save" 
+                                    icon="pi pi-save" 
+                                    severity="success" 
+                                    (click)="updatePatient()"
+                                    [style]="{'width': '100%'}">
+                                </p-button>
+                            </div>
+    
+                            <div class="field col-12 md:col-3">    
+                                <p-button label="Cancel" 
+                                    icon="pi pi-times" 
+                                    severity="warning" 
+                                    (click)="toggleEditMode()"
+                                    [style]="{'width': '100%'}">
+                                </p-button>
+                            </div>    
+    
+                            <div class="field col-12 md:col-3">
+                                <p-button label="Delete" 
+                                    icon="pi pi-trash" 
+                                    severity="danger" 
+                                    [disabled]="true"
+                                    [style]="{'width': '100%'}">
+                                </p-button>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 

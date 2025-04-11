@@ -1,0 +1,614 @@
+<p-toast />
+<div class="card p-fluid" *ngIf="selectedBiometry">
+    <div class="flex justify-content-between mb-4">
+        <div
+            class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+            style="left: -2rem"
+        >
+            <span class="font-bold text-xl text-cyan-600 pl-4">{{side}}</span>
+        </div>
+        <div class="flex align-items-center justify-content-center"></div>
+    </div>
+    <p-divider align="left" type="dashed">
+        <b class="text-xl">Biometry</b>
+    </p-divider>
+    <div class="flex justify-content-between mb-3">
+        <div>
+            <p-dropdown
+                [options]="biometries"
+                [(ngModel)]="light"
+                (onChange)="selectBiometry(light.id)"
+                optionLabel="calculDate"
+                [showClear]="true"
+                placeholder="Select a Biometry.."
+            ></p-dropdown>
+        </div>
+    </div>
+    <biometry-display [biometry]="selectedBiometry"></biometry-display>
+    <p-divider align="left" type="dashed">
+        <b class="text-xl"><i class="pi pi-lock"></i> History</b>
+    </p-divider>
+    <div class="flex flex-wrap gap-3 mb-4">
+        <p-toggleButton
+                [disabled]="true"
+                offIcon="pi pi-lock"
+                onLabel="Yes"
+                offLabel="Corneal refractive surgery"
+                styleClass="w-full sm:w-18rem"
+        />
+        <p-toggleButton
+                [disabled]="true"
+                offIcon="pi pi-lock"
+                onLabel="Yes"
+                offLabel="Keratoconus"
+                styleClass="w-full sm:w-10rem"
+        />
+        <p-toggleButton
+                [disabled]="true"
+                offIcon="pi pi-lock"
+                onLabel="Yes"
+                offLabel="Radial keratotomy"
+                styleClass="w-full sm:w-15rem"
+        />
+        <p-toggleButton
+                [disabled]="true"
+                offIcon="pi pi-lock"
+                onLabel="Yes"
+                offLabel="Non-physiological cornea"
+                styleClass="w-full sm:w-18rem"
+        />
+        <p-toggleButton
+                [disabled]="true"
+                offIcon="pi pi-lock"
+                onLabel="Yes"
+                offLabel="ICL"
+                styleClass="w-full sm:w-10rem"
+        />
+    </div>
+    <p-divider align="left" type="dashed">
+        <b class="text-xl">Settings</b>
+    </p-divider>
+    <div class="flex mb-2" *ngIf="sideDisplaySecondEye != 'OU'">
+        <label class="mr-2 mb-2" for="input-metakey">Second eye (only for Pearl)</label>
+        <p-inputSwitch [(ngModel)]="calcul.isSecondEye"
+        (ngModelChange)="updateFormula()"></p-inputSwitch>
+    </div>
+    <second-eye-form *ngIf="calcul.isSecondEye"
+        [sideSecondEye]="side"
+        [currentCalcul]="calcul"
+    ></second-eye-form>
+    <div class="flex flex-wrap gap-3 mb-4">
+        <p-toggleButton
+                [disabled]="true"
+                offIcon="pi pi-lock"
+                onLabel="Yes"
+                offLabel="Toric"
+                styleClass="w-full sm:w-10rem"
+        />
+        <div class="field">
+            <input
+                pInputText
+                [(ngModel)]="targetRefraction"
+                placeholder="Target Refraction"
+                inputId="targetRefraction"
+                type="text"
+                appAllowNegative
+                (ngModelChange)="notifyParentOfChange()"
+            />
+        </div>
+    </div>
+    <p-divider align="left" type="dashed">
+        <b class="text-xl">IOL</b>
+    </p-divider>
+    <div class="p-formgrid grid">
+        <div class="field col">
+            <p-autoComplete
+                [(ngModel)]="selectedManufacturer"
+                (ngModelChange)="importLenses()"
+                [dropdown]="true"
+                [suggestions]="filteredManufacturers"
+                (completeMethod)="
+                        filterManufacturer($event)
+                    "
+                field="name"
+                placeholder="Search a Manufacturer.."
+            ></p-autoComplete>
+        </div>
+        <div class="field col">
+            <p-autoComplete
+                [(ngModel)]="selectedLens"
+                (ngModelChange)="updateConstants()"
+                [dropdown]="true"
+                [suggestions]="filteredLenses"
+                (completeMethod)="filterLens($event)"
+                field="name"
+                placeholder="Search a IOL.."
+                [disabled]="!selectedManufacturer"
+            ></p-autoComplete>
+        </div>
+    </div>
+    <p-divider align="left" type="dashed">
+        <b class="text-xl">Formulas</b>
+    </p-divider>
+    <div class="flex flex-wrap gap-3 mb-4">
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="Pearl DGS"
+                name="pearl"
+                value="Pearl"
+            />
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="Cooke"
+                name="cooke"
+                value="Cooke"
+                [disabled]="disabledFormula"
+            />
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="Kane"
+                name="kane"
+                value="Kane"
+                [disabled]="true"
+            />
+            <i class="pi pi-lock ml-1"></i>
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="HofferQST"
+                name="hofferQST"
+                value="HofferQST"
+                [disabled]="true"
+            />
+            <i class="pi pi-lock ml-1"></i>
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="EVO"
+                name="evo"
+                value="EVO"
+                [disabled]="true"
+            />
+            <i class="pi pi-lock ml-1"></i>
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="Barrett"
+                name="barrett"
+                value="Barrett"
+                [disabled]="true"
+            />
+            <i class="pi pi-lock ml-1"></i>
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="HofferQ"
+                name="hofferQ"
+                value="HofferQ"
+                [disabled]="disabledFormula"
+            />
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="Holladay"
+                name="holladay"
+                value="Holladay"
+                [disabled]="disabledFormula"
+            />
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="SRKT"
+                name="srkt"
+                value="SRKT"
+                [disabled]="disabledFormula"
+            />
+        </div>
+        <div class="flex align-items-center">
+            <p-checkbox
+                [(ngModel)]="formulas"
+                (click)="notifyParentOfChange()"
+                label="Haigis"
+                name="haigis"
+                value="Haigis"
+                [disabled]="disabledFormula"
+            />
+        </div>
+    </div>
+    <p-divider align="left" type="dashed" *ngIf="selectedLens">
+        <b class="text-xl">Constants</b>
+    </p-divider>
+    <div class="flex flex-wrap gap-3 mb-4" *ngIf="selectedLens">
+        <div class="flex align-items-center">
+            <p-radioButton
+                name="constantType"
+                value="Manufacturer constant"
+                (onClick)="selectConstantType()"
+                [(ngModel)]="constantType"
+                inputId="type1"
+            ></p-radioButton>
+            <label class="ml-2">Manufacturer Constant</label>
+        </div>
+
+        <div class="flex align-items-center">
+            <p-radioButton
+                name="constantType"
+                value="Optimized constant"
+                (onClick)="selectConstantType()"
+                [(ngModel)]="constantType"
+                inputId="type2"
+            ></p-radioButton>
+            <label class="ml-2">Optimized Constant</label>
+        </div>
+
+        <div class="flex align-items-center">
+            <p-radioButton
+                name="constantType"
+                value="Custom constant"
+                (onClick)="selectConstantType()"
+                [(ngModel)]="constantType"
+                inputId="type3"
+            ></p-radioButton>
+            <label class="ml-2">Custom Constant</label>
+        </div>
+    </div>
+
+    <div
+        class="flex align-items-center"
+        *ngIf="constantType == 'Custom constant'"
+    >
+        <div class="p-formgrid grid" *ngIf="selectedLens">
+            <div class="field col" *ngIf="selectedLens">
+                <label>All A-Constant</label>
+                <p-inputNumber
+                    [(ngModel)]="allAConstant"
+                    mode="decimal"
+                    [minFractionDigits]="0"
+                    (ngModelChange)="updateAllConstants()"
+                    [maxFractionDigits]="4"
+                >
+                </p-inputNumber>
+            </div>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('Pearl')"
+    >
+        <div class="field col">
+            <label htmlFor="pearlTypeOD">Pearl DGS</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typePearl"
+                (ngModelChange)="updateConstantPearl()"
+                [showClear]="true"
+                id="pearlOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div
+            class="field col"
+            *ngIf="selectedLens && formulas.includes('Pearl')"
+        >
+            <label htmlFor="pearlOD">A-Constant</label>
+            <p-inputNumber
+                [(ngModel)]="constantPearl"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typePearl !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('Cooke')"
+    >
+        <div class="field col">
+            <label htmlFor="CookeType">Cooke</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeCooke"
+                (ngModelChange)="updateConstantCooke()"
+                [showClear]="true"
+                id="cooke"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div
+            class="field col"
+            *ngIf="selectedLens && formulas.includes('Cooke')"
+        >
+            <label htmlFor="cooke">A-Constant</label>
+            <p-inputNumber
+                [(ngModel)]="constantCooke"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeCooke !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('Kane')"
+    >
+        <div class="field col">
+            <label htmlFor="kaneTypeOD">Kane</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeKane"
+                (ngModelChange)="updateConstantKane()"
+                [showClear]="true"
+                id="kaneOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div
+            class="field col"
+            *ngIf="selectedLens && formulas.includes('Kane')"
+        >
+            <label htmlFor="kaneOD">A-Constant</label>
+            <p-inputNumber
+                [(ngModel)]="constantKane"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeKane !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('HofferQST')"
+    >
+        <div class="field col">
+            <label htmlFor="hofferQstTypeOD">Hoffer®QST</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeHofferQst"
+                (ngModelChange)="updateConstantHofferQST()"
+                [showClear]="true"
+                id="hofferQstOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div
+            class="field col"
+            *ngIf="selectedLens && formulas.includes('HofferQST')"
+        >
+            <label htmlFor="hofferQstOD">pACD</label>
+            <p-inputNumber
+                [(ngModel)]="constantHofferQst"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="
+                        typeHofferQst !== 'Custom constant'
+                    "
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('EVO')"
+    >
+        <div class="field col">
+            <label htmlFor="evoTypeOD">EVO</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeEvo"
+                (ngModelChange)="updateConstantEvo()"
+                [showClear]="true"
+                id="evoOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div class="field col" *ngIf="selectedLens && formulas.includes('EVO')">
+            <label htmlFor="evoOD">A-Constant</label>
+            <p-inputNumber
+                [(ngModel)]="constantEvo"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeEvo !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('Barrett')"
+    >
+        <div class="field col">
+            <label htmlFor="barrettTypeOD">Barrett</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeBarrett"
+                (ngModelChange)="updateConstantBarrett()"
+                [showClear]="true"
+                id="barrettOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div
+            class="field col"
+            *ngIf="selectedLens && formulas.includes('Barrett')"
+        >
+            <label htmlFor="barrettOD">A-Constant</label>
+            <p-inputNumber
+                [(ngModel)]="constantBarrett"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeBarrett !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('HofferQ')"
+    >
+        <div class="field col">
+            <label htmlFor="hofferQTypeOD">Hoffer Q</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeHofferQ"
+                (ngModelChange)="updateConstantHofferQ()"
+                [showClear]="true"
+                id="hofferQOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div
+            class="field col"
+            *ngIf="selectedLens && formulas.includes('HofferQ')"
+        >
+            <label htmlFor="hofferQOD">pACD</label>
+            <p-inputNumber
+                [(ngModel)]="constantHofferQ"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeHofferQ !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('Holladay')"
+    >
+        <div class="field col">
+            <label htmlFor="holladayTypeOD">Holladay</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeHolladay"
+                (ngModelChange)="updateConstantHolladay()"
+                [showClear]="true"
+                id="holladayOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div
+            class="field col"
+            *ngIf="selectedLens && formulas.includes('Holladay')"
+        >
+            <label htmlFor="holladayOD">SF</label>
+            <p-inputNumber
+                [(ngModel)]="constantHolladay"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="
+                        typeHolladay !== 'Custom constant'
+                    "
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('SRKT')"
+    >
+        <div class="field col">
+            <label htmlFor="srktTypeOD">SRK/T</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeSrkt"
+                (ngModelChange)="updateConstantSrkt()"
+                [showClear]="true"
+                id="srktOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div
+            class="field col"
+            *ngIf="selectedLens && formulas.includes('SRKT')"
+        >
+            <label htmlFor="srktOD">A-Constant</label>
+            <p-inputNumber
+                [(ngModel)]="constantSrkt"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeSrkt !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+    <div
+        class="p-formgrid grid"
+        *ngIf="selectedLens && formulas.includes('Haigis')"
+    >
+        <div class="field col-12 md:col-3">
+            <label htmlFor="haigisTypeOD">Haigis</label>
+            <p-dropdown
+                [options]="constantsTypes"
+                [(ngModel)]="typeHaigis"
+                (ngModelChange)="updateConstantHaigis()"
+                [showClear]="true"
+                id="haigisOD"
+                placeholder="Select a constant.."
+            ></p-dropdown>
+        </div>
+        <div class="field col-12 md:col-3">
+            <label htmlFor="haigisOD">a0</label>
+            <p-inputNumber
+                [(ngModel)]="constantA0"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeHaigis !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+        <div class="field col-12 md:col-3">
+            <label htmlFor="haigisOD">a1</label>
+            <p-inputNumber
+                [(ngModel)]="constantA1"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeHaigis !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+        <div class="field col-12 md:col-3">
+            <label htmlFor="haigisOD">a2</label>
+            <p-inputNumber
+                [(ngModel)]="constantA2"
+                mode="decimal"
+                [minFractionDigits]="0"
+                [maxFractionDigits]="4"
+                [disabled]="typeHaigis !== 'Custom constant'"
+            >
+            </p-inputNumber>
+        </div>
+    </div>
+</div>

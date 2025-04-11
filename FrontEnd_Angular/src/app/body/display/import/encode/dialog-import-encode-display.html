@@ -1,0 +1,28 @@
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false" [resizable]="false"
+          (onHide)="onDialogClose()" [maximizable]="true">
+    <ng-template pTemplate="header">
+        <div class="flex justify-content-between mb-4">
+            <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                 style="left: -1.5rem">
+                <span class="font-bold text-xl text-blue-600 pl-4">Encode a patient</span>
+            </div>
+            <div class="flex align-items-center justify-content-center"></div>
+        </div>
+    </ng-template>
+    <div class="grid">
+        <div class="col">
+            <p-autoComplete [(ngModel)]="selectedOrganizations" [dropdown]="true" [suggestions]="filteredOrganizations"
+                            [forceSelection]="true" [style]="{ width: '100%' }" [multiple]="true"
+                            (completeMethod)="filterOrganization($event)" field="name" appendTo="body"></p-autoComplete>
+        </div>
+    </div>
+    <div class="grid">
+        <div class="col">
+            <patient-form
+                [patient]="newPatient"
+                (patientModified)="savePatient($event)">
+            </patient-form>
+        </div>
+    </div>
+</p-dialog>
+

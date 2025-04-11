@@ -1,0 +1,33 @@
+.section-box {
+  border: 1px solid #e9e9e9;
+  border-radius: 6px;
+  padding: 1.2rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.section-box.edit-mode {
+  border-color: #d1d0d0; 
+}
+.section-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.section-box {
+  border: 1px solid #e9e9e9;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.section-box.edit-mode {
+  border-color: #d1d0d0;
+}
+
+.section-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.75rem;
+  transition: color 0.3s ease;
+}

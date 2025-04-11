@@ -1,0 +1,50 @@
+/* Conteneur principal du ScrollPanel */
+.custom-scroll-panel {
+  background-color: #e2eaf7; /* Fond sombre */
+  border: 1px solid #bcd5ff; /* Bordure fine */
+  border-radius: 6px; /* Angles arrondis */
+  overflow: hidden; /* Masque tout débordement visuel */
+}
+
+/* Liste des logs */
+.log-list {
+  list-style: none; /* Supprime les puces */
+  margin: 0;
+  padding: 8px; /* Marges internes pour la liste */
+  font-family: "Courier New", monospace; /* Police de type console */
+  color: #3e3e3e; /* Couleur claire pour le texte */
+  font-size: 14px; /* Taille du texte */
+  line-height: 1.6; /* Espacement entre les lignes */
+}
+
+/* Chaque élément de la liste */
+.log-item {
+  padding: 4px 0; /* Espacement vertical entre les logs */
+  border-bottom: 1px dotted #92a5c6; /* Ligne discrète pour séparer les logs */
+  white-space: pre-wrap; /* Garde les retours à la ligne et longs textes */
+}
+
+/* Supprime la bordure du dernier élément */
+.log-item:last-child {
+  border-bottom: none;
+}
+
+/* Barre de défilement */
+.custom-scroll-panel .p-scrollpanel-bar {
+  background-color: #555; /* Couleur par défaut de la barre */
+  border-radius: 4px; /* Bords arrondis */
+  transition: background-color 0.2s ease-in-out; /* Animation au survol */
+}
+
+.custom-scroll-panel .p-scrollpanel-bar:hover {
+  background-color: #777; /* Couleur plus claire au survol */
+}
+
+.custom-scroll-panel .p-scrollpanel-bar-y {
+  width: 10px; /* Largeur de la barre verticale */
+}
+
+.custom-scroll-panel .p-scrollpanel-bar-x {
+  height: 10px; /* Hauteur de la barre horizontale (si activée) */
+}
+

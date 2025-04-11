@@ -1,0 +1,68 @@
+<button
+    class="layout-config-button p-link"
+    type="button"
+    (click)="onConfigButtonClick()"
+    *ngIf="isPatientSelected"
+>
+    <i class="pi pi-info-circle"></i>
+</button>
+<p-sidebar
+    *ngIf="isPatientSelected"
+    [modal]="false"
+    [(visible)]="visible"
+    position="right"
+    [transitionOptions]="'.3s cubic-bezier(0, 0, 0.2, 1)'"
+    styleClass="layout-config-sidebar w-20rem"
+>
+    <ng-template pTemplate="header"
+        ><span class="font-semibold text-2xl text-primary"
+            >Patient Details
+        </span></ng-template
+    >
+    <ng-template pTemplate="content">
+        <div *ngIf="patient.lastname">
+            <p><strong>Name:</strong> {{ patient.lastname }}</p>
+            <p-divider></p-divider>
+        </div>
+        <div *ngIf="patient.firstname">
+            <p><strong>Firstname:</strong> {{ patient.firstname }}</p>
+            <p-divider></p-divider>
+        </div>
+        <div *ngIf="patient.birthDate">
+            <p><strong>Birth Date:</strong> {{ patient.birthDate }}</p>
+            <p-divider></p-divider>
+        </div>
+        <div *ngIf="patient.gender">
+            <p><strong>Gender:</strong> {{ patient.gender }}</p>
+            <p-divider></p-divider>
+        </div>
+        <div *ngIf="patient.niss">
+            <p><strong>NISS:</strong> {{ patient.niss }}</p>
+            <p-divider></p-divider>
+        </div>
+        <div *ngIf="patient.phone">
+            <p><strong>Phone:</strong> {{ patient.phone }}</p>
+            <p-divider></p-divider>
+        </div>
+        <div *ngIf="patient.mail">
+            <p><strong>Email:</strong> {{ patient.mail }}</p>
+            <p-divider></p-divider>
+        </div>
+        <div *ngIf="patient.job">
+            <p><strong>Job:</strong> {{ patient.job }}</p>
+            <p-divider></p-divider>
+        </div>
+        <div *ngIf="patient.hobbies">
+            <p><strong>Hobbies:</strong> {{ patient.hobbies }}</p>
+        </div>
+    </ng-template>
+    <ng-template pTemplate="footer"
+        ><p-button
+            label="Exit patient"
+            icon="pi pi-times"
+            iconPos="right"
+            severity="danger"
+            (onClick)="deselectPatient()"
+        ></p-button
+    ></ng-template>
+</p-sidebar>

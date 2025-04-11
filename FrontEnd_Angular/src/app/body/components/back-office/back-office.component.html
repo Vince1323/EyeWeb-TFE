@@ -1,0 +1,94 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+<p-dialog [(visible)]="query" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false" [resizable]="false"
+    [maximizable]="true" [closable]="false">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <!--HEADER LOADING-->
+            <div class="flex justify-content-between mb-4">
+                <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                    style="left: -1.5rem">
+                    <span class="font-bold text-xl text-blue-600 pl-4">Loading..</span>
+                </div>
+                <div class="flex align-items-center justify-content-center"></div>
+            </div>
+        </div>
+    </ng-template>
+    <!--CONTENT LOADING-->
+    <p-progressBar mode="indeterminate" [style]="{ height: '10px' }"></p-progressBar>
+</p-dialog>
+<div class="card">
+    <p-table #dt2 [value]="users" dataKey="id" [rows]="10" [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading"
+        [paginator]="true" [globalFilterFields]="['email', 'validEmail', 'lastname', 'firstname', 'createdAt']"
+        [customSort]="true" (sortFunction)="customSort($event)">
+        <ng-template pTemplate="header">
+            <tr>
+                <th pSortableColumn="email" style="width: 25%">Email
+                    <p-sortIcon field="email" />
+                </th>
+                <th pSortableColumn="validEmail" style="width: 5%">Valid
+                </th>
+                <th pSortableColumn="lastname" style="width: 25%">Lastname
+                    <p-sortIcon field="lastname" />
+                </th>
+                <th pSortableColumn="firstname" style="width: 25%">Firstname
+                    <p-sortIcon field="firstname" />
+                </th>
+                <th pSortableColumn="createdBy" style="width: 15%">Creation date
+                    <p-sortIcon field="createdBy" />
+                </th>
+                <th pSortableColumn="verified" style="width: 5%">Verified
+                </th>
+            </tr>
+            <tr>
+                <th>
+                    <p-columnFilter type="text" field="email" placeholder="Search" ariaLabel="Filter email" />
+                </th>
+                <th>
+                    <p-columnFilter type="boolean" field="validEmail" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="lastname" placeholder="Search" ariaLabel="Filter lastname" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="firstname" placeholder="Search" ariaLabel="Filter firstname" />
+                </th>
+                <th>
+                    <p-columnFilter type="text" field="createdAt" placeholder="Search" ariaLabel="Filter createdAt" />
+                </th>
+                <th>
+                    <p-columnFilter type="boolean" field="verified" />
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-user let-id="rowIndex">
+            <tr>
+                <td>
+                    {{ user.email }}
+                </td>
+                <td>
+                    <i class="pi"
+                        [ngClass]="{ 'text-green-500 pi-check': user.validEmail, 'text-red-500 pi-times': !user.validEmail }"></i>
+                </td>
+                <td>
+                    {{ user.lastname }}
+                </td>
+                <td>
+                    {{ user.firstname }}
+                </td>
+                <td>
+                    {{ user.createdAt | date:'yyyy-MM-dd HH:mm' }}
+                </td>
+                <td>
+                    <p-button [icon]="user.verified ? 'pi pi-check-circle' : 'pi pi-times-circle'"
+                        [severity]="user.verified ? 'success' : 'danger'" (click)="updateVerified(id)" />
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="6">No user found.</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
