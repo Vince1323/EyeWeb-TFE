@@ -1,0 +1,54 @@
+<p-sidebar
+    [(visible)]="visible"
+    position="right"
+    [transitionOptions]="'.3s cubic-bezier(0, 0, 0.2, 1)'"
+    styleClass="layout-profile-sidebar w-full sm:w-25rem"
+>
+    <div class="flex flex-column mx-auto md:mx-0">
+        <span class="mb-2 font-semibold">Welcome</span>
+        <span class="text-color-secondary font-medium mb-5"
+            >{{ user.firstname }} {{ user.lastname }}</span
+        >
+
+        <ul class="list-none m-0 p-0">
+            <li (click)="goToProfile()">
+                <a
+                    class="cursor-pointer flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150"
+                >
+                    <span>
+                        <i class="pi pi-user text-xl text-primary"></i>
+                    </span>
+                    <div class="ml-3">
+                        <span class="mb-2 font-semibold">Profile</span>
+                    </div>
+                </a>
+            </li>
+            <li (click)="goToBackOffice()">
+                <a
+                    class="cursor-pointer flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150"
+                >
+                    <span>
+                        <i class="pi pi-desktop text-xl text-primary"></i>
+                    </span>
+                    <div class="ml-3">
+                        <span class="mb-2 font-semibold">Back-Office</span>
+                    </div>
+                </a>
+            </li>
+            <li (click)="logout()">
+                <a
+                    class="cursor-pointer flex surface-border mb-3 p-3 align-items-center border-1 surface-border border-round hover:surface-hover transition-colors transition-duration-150"
+                >
+                    <span>
+                        <i class="pi pi-power-off text-xl text-primary"></i>
+                    </span>
+                    <div class="ml-3">
+                        <span class="mb-2 font-semibold"
+                            >Sign Out</span
+                        >
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</p-sidebar>

@@ -1,0 +1,37 @@
+<p-messages [(value)]="empty" [enableService]="false" [closable]="false" *ngIf="!calculOD && !calculOS"></p-messages>
+<p-toast [life]="10000"></p-toast>
+<div class="grid">
+    <div class="col-fixed" style="width: 100%"></div>
+</div>
+<div class="grid" *ngIf="calculOD || calculOS">
+    <div class="col-fixed">
+        <p-button label="New calcul" severity="success" icon="pi pi-plus" (click)="showNewCalcul()"></p-button>
+    </div>
+</div>
+<div class="grid">
+    <div [ngClass]="{'col-6': calculOD && lightOD, 'col-12': !(calculOS && lightOS)}" class="px-0" *ngIf="calculOD && lightOD">
+        <calcul-display
+                [calculs]="calculsOD"
+                [selectedCalcul]="selectedCalculOD"
+                [light]="lightOD"
+                [side]="'OD'">
+        </calcul-display>
+    </div>
+    <div [ngClass]="{'col-6': calculOS && lightOS, 'col-12': !(calculOD && lightOD)}" class="px-0" *ngIf="calculOS && lightOS">
+        <calcul-display
+                [calculs]="calculsOS"
+                [selectedCalcul]="selectedCalculOS"
+                [light]="lightOS"
+                [side]="'OS'">
+        </calcul-display>
+    </div>
+</div>
+
+
+<new-calcul-display *ngIf="newCalcul" 
+    (closeError)="closeWithError($event)" 
+    (visibleModified)="hideNewCalcul($event)" 
+    [visible]="newCalcul" 
+    [patient]="patient" 
+    [idOrga]="idOrga">
+</new-calcul-display>

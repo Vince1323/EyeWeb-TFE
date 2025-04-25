@@ -1,0 +1,156 @@
+<!-- Toast pour les messages de confirmation -->
+<p-toast></p-toast>
+<!-- Dialog de confirmation -->
+<p-confirmDialog></p-confirmDialog>
+<!-- Dialog de chargement -->
+<p-dialog [(visible)]="query" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false" [resizable]="false"
+    [maximizable]="true" [closable]="false">
+  <ng-template pTemplate="header">
+    <div class="inline-flex align-items-center justify-content-center gap-2">
+      <div class="flex justify-content-between mb-4">
+        <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+            style="left: -1.5rem">
+          <span class="font-bold text-xl text-blue-600 pl-4">Loading..</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <p-progressBar mode="indeterminate" [style]="{ height: '10px' }"></p-progressBar>
+</p-dialog>
+
+<!-- Carte principale -->
+<div class="card">
+  <!-- Tableau -->
+  <p-table
+    #dt2
+    [value]="filteredUsers"
+    [loading]="loading"
+    [paginator]="true"
+    [rows]="10"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [responsiveLayout]="'scroll'"
+    dataKey="id"
+    [scrollable]="true"
+    scrollHeight="500px"
+    sortMode="single"
+    (sortFunction)="customSort($event)"
+    [customSort]="true"
+  >
+    <!-- En-têtes -->
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="firstname">First Name <p-sortIcon field="firstname"></p-sortIcon></th>
+        <th pSortableColumn="lastname">Last Name <p-sortIcon field="lastname"></p-sortIcon></th>
+        <th pSortableColumn="email">Email <p-sortIcon field="email"></p-sortIcon></th>
+        <th pSortableColumn="role">Role <p-sortIcon field="role"></p-sortIcon></th>
+        <th>Verified</th>
+        <th>Valid</th>
+        <th>Actions</th>
+      </tr>
+      <tr>
+        <!-- Filtres dynamiques sur 1 ligne -->
+        <th>
+          <input type="text" pInputText placeholder="Search..." [(ngModel)]="filters.firstname" (input)="applyFilters()" class="w-full" />
+        </th>
+        <th>
+          <input type="text" pInputText placeholder="Search..." [(ngModel)]="filters.lastname" (input)="applyFilters()" class="w-full" />
+        </th>
+        <th></th>
+        <th>
+          <input type="text" pInputText placeholder="Search..." [(ngModel)]="filters.role" (input)="applyFilters()" class="w-full" />
+        </th>
+
+        <!-- Checkbox Verified -->
+        <th class="text-center">
+          <p-checkbox
+            [binary]="true"
+            [(ngModel)]="filters.verified"
+            (onChange)="applyFilters()"
+            inputId="chkVerified"
+          ></p-checkbox>
+        </th>
+
+        <!-- Checkbox Valid -->
+        <th class="text-center">
+          <p-checkbox
+            [binary]="true"
+            [(ngModel)]="filters.validEmail"
+            (onChange)="applyFilters()"
+            inputId="chkValid"
+          ></p-checkbox>
+        </th>
+
+        <th class="text-center">
+          <button pButton icon="pi pi-refresh" class="p-button-sm p-button-secondary" (click)="resetFilters()" pTooltip="Reset filters"></button>
+        </th>
+      </tr>
+    </ng-template>
+
+    <!-- Corps du tableau -->
+    <ng-template pTemplate="body" let-user>
+      <tr>
+        <td>{{ user.firstname }}</td>
+        <td>{{ user.lastname }}</td>
+        <td>{{ user.email }}</td>
+        <td class="relative">
+          <ng-container *ngIf="editingRoleUserId === user.id; else displayRole">
+            <p-dropdown
+              [options]="availableRoles"
+              [(ngModel)]="selectedRole"
+              (onChange)="askConfirmRoleUpdate(user)"
+              [style]="{ width: '100%' }"
+              [autoDisplayFirst]="false"
+              placeholder="Select role"
+              [appendTo]="'body'"
+            ></p-dropdown>
+          </ng-container>
+           
+          <ng-template #displayRole>
+            <div class="flex justify-content-between align-items-center w-full">
+              <span class="text-right w-full">{{ getRoleLabel(user.role) }}</span>
+              <button
+                pButton
+                type="button"
+                icon="pi pi-pencil"
+                class="p-button-sm p-button-warning ml-2"
+                (click)="startEditRole(user)"
+                pTooltip="Edit Role"
+                tooltipPosition="top"
+              ></button>
+            </div>
+          </ng-template>
+          
+                   
+        </td>
+        
+
+        <!-- Affichage des statuts (✓ ou ✗) -->
+        <td class="text-center">
+          <i class="pi" [ngClass]="user.verified ? 'pi-check text-green-500' : 'pi-times text-red-500'"></i>
+        </td>
+        <td class="text-center">
+          <i class="pi" [ngClass]="user.validEmail ? 'pi-check text-green-500' : 'pi-times text-red-500'"></i>
+        </td>
+
+        <!-- Bouton d'action -->
+        <td class="text-center">
+          <button
+            class="p-button p-button-sm"
+            [ngClass]="user.verified ? 'p-button-danger' : 'p-button-success'"
+            (click)="updateVerified(user.id)"
+            pTooltip="{{ user.verified ? 'Disable' : 'Activate' }}"
+            tooltipPosition="top"
+          >
+            <i class="pi" [ngClass]="user.verified ? 'pi-ban' : 'pi-check-circle'"></i>
+          </button>
+        </td>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="emptymessage">
+      <tr>
+        <td colspan="7" class="text-center">No users found.</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

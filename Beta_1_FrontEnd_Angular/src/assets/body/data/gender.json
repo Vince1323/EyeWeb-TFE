@@ -1,0 +1,12 @@
+{
+    "gender": [
+        {
+            "idGender": "M",
+            "name": "MALE"
+        },
+        {
+            "idGender": "F",
+            "name": "FEMALE"
+        }
+    ]
+}

@@ -1,0 +1,180 @@
+<ul class="list-none p-0 m-0" *ngIf="biometry">
+    <li class="flex align-items-center py-3 surface-border flex-wrap">
+        <div class="flex flex-wrap gap-2">
+            <p-tag severity="info" [value]="biometry.machine"></p-tag>
+            <p-tag
+                severity="info"
+                [value]="biometry.eyeStatus"
+                *ngIf="biometry.eyeStatus"
+            ></p-tag>
+            <p-tag
+                severity="secondary"
+                [value]="biometry.examQuality"
+                *ngIf="biometry.examQuality == 'Moyenne' && biometry.examQuality"
+            ></p-tag>
+            <p-tag
+                severity="danger"
+                [value]="biometry.examQuality"
+                *ngIf="biometry.examQuality != 'Moyenne' && biometry.examQuality"
+            ></p-tag>
+        </div>
+    </li>
+    <li class="py-3 border-top-1 surface-border">
+        <div class="grid">
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">K1</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.k1 }}
+                    <i
+                        *ngIf="messageWarnings['k1']"
+                        [pTooltip]="messageWarnings['k1']"
+                        class="pi pi-exclamation-triangle"
+                        style="color: #ffbd00"
+                    ></i>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">K1 Axis</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.k1Axis }}
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">KAvg</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.kAvg}}
+                    <i
+                        *ngIf="messageWarnings['kAvg']"
+                        [pTooltip]="messageWarnings['kAvg']"
+                        class="pi pi-exclamation-triangle"
+                        style="color: #ffbd00"
+                    ></i>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="py-3 border-top-1 surface-border">
+        <div class="grid">
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">K2</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.k2 }}
+                    <i
+                        *ngIf="messageWarnings['k2']"
+                        [pTooltip]="messageWarnings['k2']"
+                        class="pi pi-exclamation-triangle"
+                        style="color: #ffbd00"
+                    ></i>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">K2 Axis</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.k2Axis }}
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">Astig</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.kAstig }}
+                    <i
+                        *ngIf="messageWarnings['kAstig']"
+                        [pTooltip]="messageWarnings['kAstig']"
+                        class="pi pi-exclamation-triangle"
+                        style="color: #ffbd00"
+                    ></i>
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="py-3 border-top-1 surface-border">
+        <div class="grid">
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">AL</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.al }}
+                    <i
+                        *ngIf="messageWarnings['al']"
+                        [pTooltip]="messageWarnings['al']"
+                        class="pi pi-exclamation-triangle"
+                        style="color: #ffbd00"
+                    ></i>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">ACD</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.acd }}
+                    <i
+                        *ngIf="messageWarnings['acd']"
+                        [pTooltip]="messageWarnings['acd']"
+                        class="pi pi-exclamation-triangle"
+                        style="color: #ffbd00"
+                    ></i>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">LT</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.lensThickness }}
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="py-3 border-top-1 surface-border">
+        <div class="grid">
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">CCT</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.cct }}
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">WTW</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.wtw }}
+                    <i
+                        *ngIf="messageWarnings['wtw']"
+                        [pTooltip]="messageWarnings['wtw']"
+                        class="pi pi-exclamation-triangle"
+                        style="color: #ffbd00"
+                    ></i>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">Pupil Dia.</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.pupilDia }}
+                </div>
+            </div>
+        </div>
+    </li>
+    <li class="py-3 border-top-1 surface-border">
+        <div class="grid">
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">Cord µ</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.cord }}
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">Z40</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.z40  }}
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="text-500 w-6 md:w-1 font-medium">SNR</div>
+                <div class="text-900 w-6 md:w-3 md:flex-order-0 flex-order-1">
+                    {{ biometry.snr }}
+                    <i
+                        *ngIf="messageWarnings['snr']"
+                        [pTooltip]="messageWarnings['snr']"
+                        class="pi pi-exclamation-triangle"
+                        style="color: #ffbd00"
+                    ></i>
+                </div>
+            </div>
+        </div>
+    </li>
+</ul>

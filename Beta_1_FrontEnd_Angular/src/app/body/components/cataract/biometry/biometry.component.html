@@ -1,0 +1,187 @@
+<p-toast [life]="10000"></p-toast>
+<div class="grid">
+    <div class="col-fixed" style="width: 100%">
+        <!--<timeline-display></timeline-display>-->
+    </div>
+</div>
+<div class="grid">
+    <div class="col-fixed">
+        <p-button label="New biometry" severity="success" icon="pi pi-plus" (click)="addNewBiometry()"></p-button>
+    </div>
+</div>
+<div class="grid">
+    <div class="col" *ngIf="selectedBiometryOD.id">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-4">
+                <div class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                    style="left: -2rem">
+                    <span [ngClass]="isMobileDevice ? 'pl-2' : 'pl-4'" class="font-bold text-xl text-cyan-600">OD</span>
+                </div>
+                <div class="flex align-items-center justify-content-center">
+                    <p-dropdown [options]="biometriesOD" [(ngModel)]="lightOD"
+                        (onChange)="selectBiometry(lightOD.id, 'OD')" optionLabel="calculDate" [showClear]="true"
+                        placeholder="Select a biometry.."></p-dropdown>
+                </div>
+                <div class="flex align-items-center justify-content-center" *ngIf="!isMobileDevice">
+                    <p-inputSwitch [(ngModel)]="selectedBiometryOD.selected" (ngModelChange)="
+                            updateSelectedBiometry(selectedBiometryOD, 'OD')
+                        " [pTooltip]="
+                            selectedBiometryOD.selected
+                                ? 'Deselected'
+                                : 'Selected'
+                        " tooltipPosition="bottom"></p-inputSwitch>
+                </div>
+                <div class="flex align-items-center justify-content-center pl-4" *ngIf="!isMobileDevice">
+                    <p-menu #menu [model]="itemsOD" [popup]="true"></p-menu>
+                    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button">
+                        <i class="pi pi-ellipsis-v" (click)="menu.toggle($event)"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex align-items-center justify-content-center" *ngIf="isMobileDevice">
+                <div class="flex align-items-center justify-content-center">
+                    <p-inputSwitch [(ngModel)]="selectedBiometryOD.selected" (ngModelChange)="
+                            updateSelectedBiometry(selectedBiometryOD, 'OD')
+                        " [pTooltip]="
+                            selectedBiometryOD.selected
+                                ? 'Deselected'
+                                : 'Selected'
+                        " tooltipPosition="bottom"></p-inputSwitch>
+                </div>
+                <div class="flex align-items-center justify-content-center pl-4">
+                    <p-menu #menu [model]="itemsOD" [popup]="true"></p-menu>
+                    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button">
+                        <i class="pi pi-ellipsis-v" (click)="menu.toggle($event)"></i>
+                    </button>
+                </div>
+            </div>
+            <biometry-display [biometry]="selectedBiometryOD"></biometry-display>
+        </div>
+    </div>
+    <div class="col" *ngIf="selectedBiometryOS.id">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-4">
+                <div class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                    style="left: -2rem">
+                    <span [ngClass]="isMobileDevice ? 'pl-2' : 'pl-4'" class="font-bold text-xl text-cyan-600">OS</span>
+                </div>
+                <div class="flex align-items-center justify-content-center">
+                    <p-dropdown [options]="biometriesOS" [(ngModel)]="lightOS"
+                        (onChange)="selectBiometry(lightOS.id, 'OS')" optionLabel="calculDate" [showClear]="true"
+                        placeholder="Select a biometry.."></p-dropdown>
+                </div>
+                <div class="flex align-items-center justify-content-center" *ngIf="!isMobileDevice">
+                    <p-inputSwitch [(ngModel)]="selectedBiometryOS.selected" (ngModelChange)="
+                            updateSelectedBiometry(selectedBiometryOS, 'OS')
+                        " [pTooltip]="
+                            selectedBiometryOS.selected
+                                ? 'Deselected'
+                                : 'Selected'
+                        " tooltipPosition="bottom"></p-inputSwitch>
+                </div>
+                <div class="flex align-items-center justify-content-center pl-4" *ngIf="!isMobileDevice">
+                    <p-menu #menu [model]="itemsOS" [popup]="true"></p-menu>
+                    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button">
+                        <i class="pi pi-ellipsis-v" (click)="menu.toggle($event)"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="flex align-items-center justify-content-center" *ngIf="isMobileDevice">
+                <div class="flex align-items-center justify-content-center">
+                    <p-inputSwitch [(ngModel)]="selectedBiometryOS.selected" (ngModelChange)="
+                            updateSelectedBiometry(selectedBiometryOS, 'OS')
+                        " [pTooltip]="
+                            selectedBiometryOS.selected
+                                ? 'Deselected'
+                                : 'Selected'
+                        " tooltipPosition="bottom"></p-inputSwitch>
+                </div>
+                <div class="flex align-items-center justify-content-center pl-4">
+                    <p-menu #menu [model]="itemsOS" [popup]="true"></p-menu>
+                    <button #topbarmenubutton class="p-link layout-topbar-menu-button layout-topbar-button">
+                        <i class="pi pi-ellipsis-v" (click)="menu.toggle($event)"></i>
+                    </button>
+                </div>
+            </div>
+            <biometry-display [biometry]="selectedBiometryOS"></biometry-display>
+        </div>
+    </div>
+</div>
+<!--MODAL EDIT-->
+<p-dialog [(visible)]="modalEditOD" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false" [resizable]="false"
+    [maximizable]="true" *ngIf="modalEditOD">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <div class="flex justify-content-between mb-4">
+                <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                    style="left: -1.5rem">
+                    <span class="font-bold text-xl text-blue-600 pl-4">Edit a Biometry</span>
+                </div>
+                <div class="flex align-items-center justify-content-center"></div>
+            </div>
+        </div>
+    </ng-template>
+    <div class="card">
+        <div class="flex justify-content-between mb-4">
+            <div class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                style="left: -2rem">
+                <span class="font-bold text-xl text-cyan-600 pl-4">OD</span>
+            </div>
+            <div class="flex align-items-center justify-content-center"></div>
+        </div>
+        <biometry-form [formGroup]="selectedBiometryODCast" (changeDetected)="checkFormValidity()"></biometry-form>
+    </div>
+    <button pButton [disabled]="!isFormsValid" (click)="saveBiometry('OD')" pRipple label="Save" class="w-full"
+        icon="pi pi-save"></button>
+</p-dialog>
+<p-dialog [(visible)]="modalEditOS" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false" [resizable]="false"
+    [maximizable]="true" *ngIf="modalEditOS">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <div class="flex justify-content-between mb-4">
+                <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                    style="left: -1.5rem">
+                    <span class="font-bold text-xl text-blue-600 pl-4">Edit a Biometry</span>
+                </div>
+                <div class="flex align-items-center justify-content-center"></div>
+            </div>
+        </div>
+    </ng-template>
+    <div class="card">
+        <div class="flex justify-content-between mb-4">
+            <div class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                style="left: -2rem">
+                <span class="font-bold text-xl text-cyan-600 pl-4">OS</span>
+            </div>
+            <div class="flex align-items-center justify-content-center"></div>
+        </div>
+        <biometry-form [formGroup]="selectedBiometryOSCast" (changeDetected)="checkFormValidity()"></biometry-form>
+    </div>
+    <button pButton [disabled]="!isFormsValid" (click)="saveBiometry('OS')" pRipple label="Save" class="w-full"
+        icon="pi pi-save"></button>
+</p-dialog>
+<!--MODAL CONFIRM-->
+<p-confirmDialog></p-confirmDialog>
+<!--MODAL AVERAGE-->
+<average-display *ngIf="modalAverageOD" (visibleModified)="hideAverageOD($event)" [patient]="patient" [idOrga]="idOrga"
+    [side]="'OD'" [visible]="modalAverageOD"></average-display>
+<average-display *ngIf="modalAverageOS" (visibleModified)="hideAverageOS($event)" [patient]="patient" [idOrga]="idOrga"
+    [side]="'OS'" [visible]="modalAverageOS"></average-display>
+
+<!--MODAL ENCODE NEW BIO-->
+<p-dialog [(visible)]="modalAddBio" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false" [resizable]="false"
+    [maximizable]="true">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <div class="flex justify-content-between mb-4">
+                <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                    style="left: -1.5rem">
+                    <span class="font-bold text-xl text-blue-600 pl-4">Add a Biometry</span>
+                </div>
+                <div class="flex align-items-center justify-content-center"></div>
+            </div>
+        </div>
+    </ng-template>
+    <biometries-form [biometries]="newBiometries" (biometryModified)="onBiometryModified($event)"
+        [isAddNewBio]="modalAddBio"></biometries-form>
+</p-dialog>

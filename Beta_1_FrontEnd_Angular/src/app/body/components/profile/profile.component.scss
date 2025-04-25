@@ -1,0 +1,9 @@
+.button-container {
+    display: flex;
+    justify-content: center; /* Centre les boutons horizontalement */
+    gap: 0px; /* Ajoute un espacement uniforme entre eux */
+    width: 100%;
+    padding: 10px 0; /* Ajuste l'espace en haut et en bas */
+    display: flex; 
+    flex-wrap: wrap;
+}

@@ -1,0 +1,44 @@
+export interface Cornea {
+    id: number;
+    createdBy: string;
+    createdAt: string;
+    modifiedBy: string;
+    modifiedAt: string;
+    deleted: boolean;
+    version: number;
+
+    eyeSide: 'OU' | 'OD' | 'OS' | null;
+    normal: boolean;
+    corneaGuttata: boolean;
+    epithelialDystropia: boolean;
+    stromalDystropia: boolean;
+    posteriorDystropia: boolean;
+    keratoconus: boolean;
+    transfixing: boolean;
+    dalk: boolean;
+    dmek: boolean;
+    dsaek: boolean;
+    scar: boolean;
+    dryEye: boolean;
+    fuchsGuttata: boolean;
+    fleischerRing: boolean;
+    vogtRidge: boolean;
+    cornealOpacity: boolean;
+    hydrops: boolean;
+    dystrophy: boolean;
+    endothelial: boolean;
+    stromal: boolean;
+    epithelial: boolean;
+    transplant: boolean;
+    pterygium: boolean;
+    salzmann: boolean;
+    peripheralDegeneration: boolean;
+    radialKeratotomy: boolean;
+    radialKeratotomyText?: string | null;
+    trauma: boolean;
+    cornealOpacityHaze: boolean;
+    cornealOpacityHazeLocation?: string | null;
+    colorantIntake: boolean;
+    other: boolean;
+    otherText?: string | null;
+}

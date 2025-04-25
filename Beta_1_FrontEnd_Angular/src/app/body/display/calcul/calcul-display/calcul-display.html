@@ -1,0 +1,109 @@
+<div [ngClass]="{
+    'col-fixed': isMobileDevice,
+    col: !isMobileDevice
+}" [ngStyle]="{ width: isMobileDevice ? '100%' : 'auto' }" *ngIf="selectedCalculFiltered">
+<div class="card mb-0">
+<div class="flex justify-content-between mb-4">
+    <div class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+        style="left: -2rem">
+        <span [ngClass]="isMobileDevice ? 'pl-2' : 'pl-4'" class="font-bold text-xl text-cyan-600">{{ side }}</span>
+    </div>
+    <div class="flex align-items-center justify-content-center">
+        <p-dropdown [options]="calculs" [(ngModel)]="light" optionLabel="createdAt"
+            placeholder="Select a calcul.." (onChange)="selectCalcul(light.id)"></p-dropdown>
+    </div>
+</div>
+<div *ngIf="selectedCalculFiltered">
+    <div *ngIf="selectedCalculFiltered.valueMatrix && selectedCalculFiltered.formulas">
+        <p-divider align="left" type="dashed">
+            <b class="text-xl">Diopters</b>
+        </p-divider>
+        <div class="flex flex-wrap gap-2 mb-2">
+            <p-tag severity="info" [value]="selectedCalculFiltered.lens.lensManufacturer.name"></p-tag>
+            <p-tag severity="info" [value]="selectedCalculFiltered.lens.name"></p-tag>
+            <p-tag severity="secondary" [value]="target"></p-tag>
+            <p-tag *ngIf="selectedCalculFiltered.isSecondEye" severity="danger">Is second</p-tag>
+            <div class="flex align-items-center justify-content-center">
+                <label class="mr-2 ml-8 mb-2" for="input-metakey">Display all powers</label>
+                <p-inputSwitch [(ngModel)]="selectedCalcul.filter" (ngModelChange)="removeFilter()"></p-inputSwitch>
+            </div>
+        </div>
+        <p-table [value]="selectedCalculFiltered.valueMatrixConversion" 
+            styleClass="p-datatable-gridlines p-datatable-striped"
+            [(selection)]="selectedPower"
+            (onRowSelect)="selectPower(selectedPower)"
+            (onRowUnselect)="unSelectPower()"
+            dataKey="id"
+            class="p-datatable-sm">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4rem"></th>
+                    <th>IOL Power</th>
+                    <th *ngFor="let formula of selectedCalculFiltered.formulas">
+                        {{ formula }}
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-value let-rowIndex="rowIndex">
+                <tr>
+                    <td>
+                        <p-tableRadioButton [value]="value" name="powerSelection"/>
+                    </td>
+                    <td *ngFor="let data of value.values; let i = index" [ngStyle]="{
+                                'font-weight': i === 0 ? 'bold' : 'normal'
+                            }">
+                        {{ data !== null ? data : "-" }}
+                    </td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div *ngIf="selectedCalculFiltered.exam">
+        <p-divider align="left" type="dashed">
+            <b class="text-xl">Biometry</b>
+        </p-divider>
+        <biometry-display [biometry]="selectedCalculFiltered.exam"></biometry-display>
+    </div>
+    <div *ngIf="selectedCalculFiltered.isSecondEye">
+        <p-divider align="left" type="dashed">
+            <b class="text-xl">Second eye</b>
+        </p-divider>
+        <p-table [value]="selectedCalculFiltered.constants" class="p-datatable-sm">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Precedent power</th>
+                    <th>SE</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body">
+                <tr>
+                    <td>{{ selectedCalculFiltered.precPowerSelected }}</td>
+                    <td>{{ selectedCalculFiltered.se }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <div *ngIf="selectedCalculFiltered.constants">
+        <p-divider align="left" type="dashed">
+            <b class="text-xl">Constants</b>
+        </p-divider>
+        <p-table [value]="selectedCalculFiltered.constants" class="p-datatable-sm">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>Formula</th>
+                    <th>Type</th>
+                    <th>Constant</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-constant>
+                <tr>
+                    <td>{{ constant.formula }}</td>
+                    <td>{{ constant.constantType }}</td>
+                    <td>{{ constant.value }}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>
+</div>
+</div>

@@ -1,0 +1,49 @@
+<p class="font-italic text-red-500">* Required Field</p>
+<form [formGroup]="biometryForm" (ngSubmit)="saveBiometry()" novalidate>
+    <div class="grid">
+        <div [ngClass]="{'col-fixed': biometryOD && isMobileDevice, 'col': biometryOD && !isMobileDevice}"
+            [ngStyle]="{'width': biometryOD && isMobileDevice ? '100%' : 'auto'}" formGroupName="biometryOD">
+            <div class="card">
+                <div class="flex justify-content-between mb-4">
+                    <div class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                        style="left: -2rem">
+                        <span class="font-bold text-xl text-cyan-600 pl-4">OD</span>
+                    </div>
+                    <div class="flex align-items-center justify-content-center"></div>
+                </div>
+                <biometry-form [biometry]="biometryOD" [formGroup]="biometryODFormGroup"
+                    (changeDetected)="checkFormValidity()"></biometry-form>
+            </div>
+        </div>
+        <div [ngClass]="{'col-fixed': biometryOS && isMobileDevice, 'col': biometryOS && !isMobileDevice}"
+            [ngStyle]="{'width': biometryOS && isMobileDevice ? '100%' : 'auto'}" formGroupName="biometryOS">
+            <div class="card">
+                <div class="flex justify-content-between mb-4">
+                    <div class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                        style="left: -2rem">
+                        <span class="font-bold text-xl text-cyan-600 pl-4">OS</span>
+                    </div>
+                    <div class="flex align-items-center justify-content-center"></div>
+                </div>
+                <biometry-form [biometry]="biometryOS" [formGroup]="biometryOSFormGroup"
+                    (changeDetected)="checkFormValidity()"></biometry-form>
+            </div>
+        </div>
+    </div>
+    <div class="grid" *ngIf="!isAddNewBio">
+        <div class="col">
+            <button pButton type="submit" (click)="goBack()" pRipple label="Previous"
+                icon="pi pi-angle-left" class="w-full"></button>
+        </div>
+        <div class="col">
+            <button pButton [disabled]="!isFormsValid" type="submit" pRipple label="Next" icon="pi pi-angle-right"
+                iconPos="right" class="w-full"></button>
+        </div>
+    </div>
+    <div class="grid" *ngIf="isAddNewBio">
+        <div class="col">
+            <button pButton type="submit" [disabled]="!isFormsValid" [loading]="loading" pRipple label="Save"
+                icon="pi pi-save" class="p-button w-full"></button>
+        </div>
+    </div>
+</form>

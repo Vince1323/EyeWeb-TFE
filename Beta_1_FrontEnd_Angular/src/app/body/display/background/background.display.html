@@ -1,0 +1,127 @@
+<div class="grid">
+    <div class="col">
+      <div class="card mb-0">
+        <p-accordion [multiple]="true">
+          <p-accordionTab header="Medical background">
+            <p-tree
+              [value]="medicalBackgrounds"
+              selectionMode="checkbox"
+              (onNodeSelect)="onNodeSelect($event, medicalBackgrounds, selectedMedicalBackgrounds)"
+              (onNodeUnselect)="onNodeUnselect($event, medicalBackgrounds, selectedMedicalBackgrounds)"
+              class="p-tree-checkbox"
+              [propagateSelectionDown]="false"
+            ></p-tree>
+  
+            <div *ngIf="otherComments['MedicalBackground'] !== undefined" class="mt-3">
+              <label for="comment-med-back" class="block mb-2 font-medium"
+                >Comment for Medical Background - Other:</label
+              >
+              <textarea
+                id="comment-med-back"
+                class="p-inputtext w-full"
+                [(ngModel)]="otherComments['MedicalBackground']"
+                rows="3"
+                placeholder="Please provide details..."
+              ></textarea>
+            </div>
+          </p-accordionTab>
+  
+          <p-accordionTab header="Medical treatments">
+            <p-tree
+              [value]="medicalTreatments"
+              selectionMode="checkbox"
+              (onNodeSelect)="onNodeSelect($event, medicalTreatments, selectedMedicalTreatments)"
+              (onNodeUnselect)="onNodeUnselect($event, medicalTreatments, selectedMedicalTreatments)"
+              class="p-tree-checkbox"
+              [propagateSelectionDown]="false"
+            ></p-tree>
+  
+            <div *ngIf="otherComments['MedicalTreatment'] !== undefined" class="mt-3">
+              <label for="comment-med-treat" class="block mb-2 font-medium"
+                >Comment for Medical Treatment - Other:</label
+              >
+              <textarea
+                id="comment-med-treat"
+                class="p-inputtext w-full"
+                [(ngModel)]="otherComments['MedicalTreatment']"
+                rows="3"
+                placeholder="Please provide details..."
+              ></textarea>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+  
+  <div class="grid">
+    <div class="col">
+      <div class="card mb-0">
+        <div class="flex justify-content-between mb-4">
+          <div
+            class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+            style="left: -2rem"
+          >
+            <span [ngClass]="isMobileDevice ? 'pl-2' : 'pl-4'" class="font-bold text-xl text-cyan-600">OD</span>
+          </div>
+        </div>
+  
+        <p-accordion [multiple]="true">
+          <p-accordionTab header="Ophthalmological history">
+            <p-tree
+              [value]="ophthalmologicalHistorys"
+              selectionMode="checkbox"
+              (onNodeSelect)="onNodeSelect($event, ophthalmologicalHistorys, selectedOphthalmologicalHistorys)"
+              (onNodeUnselect)="onNodeUnselect($event, ophthalmologicalHistorys, selectedOphthalmologicalHistorys)"
+              class="p-tree-checkbox"
+              [propagateSelectionDown]="false"
+            ></p-tree>
+  
+            <div *ngIf="otherComments['OphHistoryOD'] !== undefined" class="mt-3">
+              <label for="oph-history-od" class="block mb-2 font-medium"
+                >Comment for Ophthalmological History OD - Other:</label
+              >
+              <textarea
+                id="oph-history-od"
+                class="p-inputtext w-full"
+                [(ngModel)]="otherComments['OphHistoryOD']"
+                rows="3"
+                placeholder="Please provide details..."
+              ></textarea>
+            </div>
+          </p-accordionTab>
+  
+          <p-accordionTab header="Ophthalmological treatments">
+            <p-tree
+              [value]="ophthalmologicalTreatments"
+              selectionMode="checkbox"
+              (onNodeSelect)="onNodeSelect($event, ophthalmologicalTreatments, selectedOphthalmologicalTreatments)"
+              (onNodeUnselect)="onNodeUnselect($event, ophthalmologicalTreatments, selectedOphthalmologicalTreatments)"
+              class="p-tree-checkbox"
+              [propagateSelectionDown]="false"
+            ></p-tree>
+  
+            <div *ngIf="otherComments['OphTreatmentOD'] !== undefined" class="mt-3">
+              <label for="oph-treat-od" class="block mb-2 font-medium"
+                >Comment for Ophthalmological Treatment OD - Other:</label
+              >
+              <textarea
+                id="oph-treat-od"
+                class="p-inputtext w-full"
+                [(ngModel)]="otherComments['OphTreatmentOD']"
+                rows="3"
+                placeholder="Please provide details..."
+              ></textarea>
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </div>
+  </div>
+  
+  <div class="p-fluid p-formgrid grid mt-1">
+    <div class="field col">
+      <p-button label="Save" icon="pi pi-save"></p-button>
+    </div>
+  </div>
+  

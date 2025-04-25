@@ -1,0 +1,16 @@
+{
+    "eyeSides": [
+        {
+            "id": "left",
+            "name": "OD"
+        },
+        {
+            "id": "right",
+            "name": "OS"
+        },
+        {
+            "id": "both",
+            "name": "OU"
+        }
+    ]
+}

@@ -1,0 +1,140 @@
+<div [formGroup]="formGroup">
+    <div class="p-fluid p-formgrid grid">
+        <div class="field col-fixed w-full">
+            <p-autoComplete class="" [dropdown]="true" [suggestions]="filteredBiometers"
+                [forceSelection]="true" [style]="{ width: '100%' }" (completeMethod)="filterBiometer($event)"
+                formControlName="machine"
+                placeholder="Search biometer.." appendTo="body"></p-autoComplete>
+        </div>
+        <div class="field col-4 ">
+            <label for="k1" class="block text-900 font-medium mb-2">K1 <span
+                    class="font-bold mr-3 text-red-500 w-2">*</span></label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center" formControlName="k1"
+                (ngModelChange)="notifyParentOfChange()"inputId="K1" [min]="20" [max]="80" mode="decimal"
+                [maxFractionDigits]="2"> </p-inputNumber>
+        </div>
+        <!--Non requis-->
+        <div class="field col-4 ">
+            <label for="k1Axis" class="block text-900 font-medium mb-2">K1 Axis</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="k1Axis" (ngModelChange)="notifyParentOfChange()" inputId="K1 Axis" [min]="0"
+                [max]="180" mode="decimal" [maxFractionDigits]="2"> </p-inputNumber>
+        </div>
+        <div class="field col-4">
+            <label for="kAvg" class="block text-900 font-medium mb-2 flex align-items-center gap-2">
+                KAvg
+                <i class="pi pi-info-circle text-sm text-gray-500" pTooltip="Automatically calculated value" tooltipPosition="top"></i>
+            </label>
+            <div style="pointer-events: none; opacity: 0.6;">
+                <p-inputNumber
+                    #kAvgRef
+                    class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                    formControlName="kAvg"
+                    inputId="KAvg"
+                    [min]="20"
+                    [max]="80"
+                    mode="decimal"
+                    [maxFractionDigits]="2"
+                    [disabled]="true"
+                    [attr.tabindex]="-1">
+                </p-inputNumber>
+            </div>
+        </div>
+        
+        <!--Non requis-->
+        <div class="field col-4 ">
+            <label for="k2" class="block text-900 font-medium mb-2">K2 <span
+                    class="font-bold mr-3 text-red-500 w-2">*</span></label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center" formControlName="k2"
+                (ngModelChange)="notifyParentOfChange()" inputId="K2" [min]="20" [max]="80" mode="decimal"
+                [maxFractionDigits]="2"> </p-inputNumber>
+        </div>
+        <div class="field col-4 ">
+            <label for="k2Axis" class="block text-900 font-medium mb-2">K2 Axis</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="k2Axis" inputId="K2 Axis" [min]="0" [max]="180" mode="decimal" [maxFractionDigits]="2">
+            </p-inputNumber>
+        </div>
+        
+       <!-- Astig (readonly total) -->
+       <div class="field col-4">
+        <label for="kAstig" class="block text-900 font-medium mb-2 flex align-items-center gap-2">
+            Astig
+            <i class="pi pi-info-circle text-sm text-gray-500" pTooltip="Automatically calculated value" tooltipPosition="top"></i>
+        </label>
+        <div style="pointer-events: none; opacity: 0.6;">
+            <p-inputNumber
+                #astigRef
+                class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="kAstig"
+                inputId="Astig"
+                [min]="-20"
+                [max]="20"
+                mode="decimal"
+                [maxFractionDigits]="2"
+                [disabled]="true"
+                [attr.tabindex]="-1">
+            </p-inputNumber>
+        </div>
+    </div>
+    
+        
+        <div class="field col-4 ">
+            <label for="al" class="block text-900 font-medium mb-2">AL <span
+                    class="font-bold mr-3 text-red-500 w-2">*</span></label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center" formControlName="al"
+                (ngModelChange)="notifyParentOfChange()" inputId="AXL" [min]="12" [max]="40" mode="decimal"
+                [maxFractionDigits]="3"> </p-inputNumber>
+        </div>
+        <div class="field col-4 ">
+            <label for="acd" class="block text-900 font-medium mb-2">ACD <span
+                    class="font-bold mr-3 text-red-500 w-2">*</span></label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="acd" (ngModelChange)="notifyParentOfChange()" inputId="ACD" [min]="0.5" [max]="6"
+                mode="decimal" [maxFractionDigits]="2"> </p-inputNumber>
+        </div>
+        <div class="field col-4 ">
+            <label for="lt" class="block text-900 font-medium mb-2">LT</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="lensThickness" (ngModelChange)="notifyParentOfChange()" inputId="LT" [min]="1"
+                [max]="5" mode="decimal" [maxFractionDigits]="2"> </p-inputNumber>
+        </div>
+        <!--Tous non requis-->
+        <div class="field col-4 ">
+            <label for="cct" class="block text-900 font-medium mb-2">CCT</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="cct" (ngModelChange)="notifyParentOfChange()" inputId="CCT" [min]="200" [max]="900">
+            </p-inputNumber>
+        </div>
+        <div class="field col-4 ">
+            <label for="wtw" class="block text-900 font-medium mb-2">WTW</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="wtw" (ngModelChange)="notifyParentOfChange()" inputId="WTW" [min]="8" [max]="20"
+                mode="decimal" [maxFractionDigits]="2"> </p-inputNumber>
+        </div>
+        <div class="field col-4 ">
+            <label for="pupilDia" class="block text-900 font-medium mb-2">Pupil Dia.</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="pupilDia" (ngModelChange)="notifyParentOfChange()" inputId="Pupil Dia." [min]="1"
+                [max]="8" mode="decimal" [maxFractionDigits]="2"> </p-inputNumber>
+        </div>
+        <div class="field col-4 ">
+            <label for="cord" class="block text-900 font-medium mb-2">Cord µ</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="cord" (ngModelChange)="notifyParentOfChange()" inputId="Cord µ" [min]="0" [max]="2"
+                mode="decimal" [maxFractionDigits]="2"></p-inputNumber>
+        </div>
+        <div class="field col-4 ">
+            <label for="z40" class="block text-900 font-medium mb-2">Z40</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="z40" (ngModelChange)="notifyParentOfChange()" inputId="Z40" [min]="-1000" [max]="1000"
+                mode="decimal" [maxFractionDigits]="3"> </p-inputNumber>
+        </div>
+        <div class="field col-4 ">
+            <label for="snr" class="block text-900 font-medium mb-2">SNR</label>
+            <p-inputNumber class="p-inputNumber p-component p-element w-4rem xl:w-6rem text-center"
+                formControlName="snr" (ngModelChange)="notifyParentOfChange()" inputId="SNR" [min]="0" [max]="500"
+                mode="decimal" [maxFractionDigits]="2"> </p-inputNumber>
+        </div>
+    </div>
+</div>

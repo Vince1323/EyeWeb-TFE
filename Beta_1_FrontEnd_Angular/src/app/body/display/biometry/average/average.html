@@ -1,0 +1,141 @@
+<p-dialog
+    *ngIf="biometries"
+    [(visible)]="visible"
+    [modal]="true"
+    [style]="{ width: '90vw' }"
+    [draggable]="false"
+    [resizable]="false"
+    [maximizable]="true"
+    (onHide)="close()"
+>
+    <ng-template pTemplate="header">
+        <div
+            class="inline-flex align-items-center justify-content-center gap-2"
+        >
+            <!--HEADER SELECT-->
+            <div class="flex justify-content-between mb-4" *ngIf="index === 0">
+                <div
+                    class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                    style="left: -1.5rem"
+                >
+                    <span class="font-bold text-xl text-blue-600 pl-4"
+                        >Select biometries</span
+                    >
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center"
+                ></div>
+            </div>
+            <!--HEADER LOADING-->
+            <div class="flex justify-content-between mb-4" *ngIf="index === 1">
+                <div
+                    class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                    style="left: -1.5rem"
+                >
+                    <span class="font-bold text-xl text-blue-600 pl-4"
+                        >Loading..</span
+                    >
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center"
+                ></div>
+            </div>
+            <!--HEADER RESULT-->
+            <div class="flex justify-content-between mb-4" *ngIf="index === 2">
+                <div
+                    class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                    style="left: -1.5rem"
+                >
+                    <span class="font-bold text-xl text-blue-600 pl-4"
+                        >Result</span
+                    >
+                </div>
+                <div
+                    class="flex align-items-center justify-content-center"
+                ></div>
+            </div>
+        </div>
+    </ng-template>
+    <!--STEPS-->
+    <div class="card hidden-md-down">
+        <p-steps
+            [model]="steps"
+            [activeIndex]="index"
+            [readonly]="true"
+        ></p-steps>
+    </div>
+    <!--CONTENT SELECT-->
+    <div class="card mb-4" *ngIf="index === 0">
+        <p-table
+            [value]="biometries"
+            [(selection)]="selectedBiometries"
+            dataKey="id"
+            [tableStyle]="{'min-width': '50rem'}"
+        >
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 4rem">
+                        <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                    </th>
+                    <th>Date</th>
+                    <th>Biometer</th>
+                    <th>K1</th>
+                    <th>K2</th>
+                    <th>AL</th>
+                    <th>ACD</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-biometry>
+                <tr>
+                    <td>
+                        <p-tableCheckbox [value]="biometry"></p-tableCheckbox>
+                    </td>
+                    <td>{{biometry.calculDate| date:'yyyy-MM-dd HH:mm:ss'}}</td>
+                    <td>{{biometry.biometer}}</td>
+                    <td>{{biometry.k1}}</td>
+                    <td>{{biometry.k2}}</td>
+                    <td>{{biometry.al}}</td>
+                    <td>{{biometry.acd}}</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+    <!--CONTENT LOADING-->
+    <p-progressBar
+        *ngIf="index === 1"
+        mode="indeterminate"
+        [style]="{ height: '10px' }"
+    ></p-progressBar>
+    <!--CONTENT LOADING-->
+    <div class="card mb-4" *ngIf="index === 2 && average">
+        <div class="flex justify-content-between mb-4">
+            <div
+                class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                style="left: -2rem"
+            >
+                <span class="font-bold text-xl text-cyan-600 pl-4">OS</span>
+            </div>
+        </div>
+        <biometry-display [biometry]="average"></biometry-display>
+    </div>
+    <!--BUTTON-->
+    <button
+        [disabled]="selectedBiometries.length === 0"
+        *ngIf="index === 0 && selectedBiometries"
+        pButton
+        pRipple
+        label="Calculate"
+        (click)="calculate()"
+        class="w-full"
+        icon="pi pi-calculator"
+    ></button>
+    <button
+        *ngIf="index === 2"
+        pButton
+        pRipple
+        label="Save"
+        (click)="save()"
+        class="w-full"
+        icon="pi pi-save"
+    ></button>
+</p-dialog>
