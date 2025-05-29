@@ -1,0 +1,154 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="grid" *ngIf="patient">
+  <div class="col">
+    <div class="card mb-0">
+      <div class="p-fluid p-formgrid grid">
+      
+        <!-- ATCD O -->
+        <div class="field col-12 md:col-4">
+          <label for="atcdO">ATCD O</label>
+          <input pInputText id="atcdO" type="text" [(ngModel)]="summary.atcdO" [disabled]="!isEditMode" />
+        </div>
+
+        <!-- Medical History -->
+        <div class="field col-12 md:col-4">
+          <label for="history">Medical History</label>
+          <input pInputText id="history" type="text" [(ngModel)]="summary.medicalHistory" [disabled]="!isEditMode" />
+        </div>
+
+        <!-- Dominant Eye -->
+        <div class="field col-12 md:col-4">
+          <label>Dominant Eye</label>
+          <p-dropdown [options]="dominantEyeOptions" [(ngModel)]="summary.dominantEye" placeholder="Select" [disabled]="!isEditMode"></p-dropdown>
+        </div>
+
+        <!-- Allergy -->
+        <div class="field col-12 md:col-4">
+          <label>Allergy</label>
+          <input pInputText type="text" [(ngModel)]="summary.allergy" [disabled]="!isEditMode" />
+        </div>
+
+        <!-- Anesthesia -->
+        <div class="field col-12 md:col-4">
+          <label>Anesthesia</label>
+          <p-dropdown [options]="anesthesiaOptions" [(ngModel)]="summary.anesthesia" placeholder="Select" [disabled]="!isEditMode"></p-dropdown>
+        </div>
+
+        <!-- Surgery Type -->
+        <div class="field col-12 md:col-4">
+          <label>Surgery Type</label>
+          <p-dropdown [options]="surgeryTypeOptions" [(ngModel)]="summary.surgeryType" placeholder="Select" [disabled]="!isEditMode"></p-dropdown>
+        </div>
+
+        <!-- Date of Surgery -->
+        <div class="field col-12 md:col-4">
+          <label>Date of Surgery</label>
+          <p-calendar [(ngModel)]="summary.dateSurgery" [showIcon]="true" [disabled]="!isEditMode"></p-calendar>
+        </div>
+
+        <!-- Laterality -->
+        <div class="field col-12 md:col-4">
+          <label>Laterality</label>
+          <div class="flex gap-3">
+            <p-radioButton name="laterality" value="OU" [(ngModel)]="summary.laterality" [disabled]="!isEditMode" inputId="ou"></p-radioButton>
+            <label for="ou">OU</label>
+            <p-radioButton name="laterality" value="OD" [(ngModel)]="summary.laterality" [disabled]="!isEditMode" inputId="od"></p-radioButton>
+            <label for="od">OD</label>
+            <p-radioButton name="laterality" value="OS" [(ngModel)]="summary.laterality" [disabled]="!isEditMode" inputId="os"></p-radioButton>
+            <label for="os">OS</label>
+          </div>
+        </div>
+        <!-- Surgeon & Preoperative Visit -->
+        <div class="field col-12 md:col-6">
+          <label>Surgeon</label>
+          <p-dropdown [options]="surgeonOptions" optionLabel="name" [(ngModel)]="summary.surgeon" [disabled]="!isEditMode"></p-dropdown>
+        </div>
+        <div class="field col-12 md:col-6">
+          <div class="section-box" [ngClass]="{'edit-mode': isEditMode}">
+            <label class="section-label">Preoperative Visit</label>
+            <div class="flex gap-3">
+              <p-radioButton name="visit" value="Yes" [(ngModel)]="summary.visitWithSurgeon" [disabled]="!isEditMode" inputId="visitYes"></p-radioButton>
+              <label for="visitYes">Yes</label>
+              <p-radioButton name="visit" value="No" [(ngModel)]="summary.visitWithSurgeon" [disabled]="!isEditMode" inputId="visitNo"></p-radioButton>
+              <label for="visitNo">No</label>
+            </div>
+          </div>
+        </div>
+        
+        <!-- IOL -->
+        <div class="field col-12">
+          <label>IOL</label>
+          <input pInputText type="text" [(ngModel)]="summary.iol" [disabled]="!isEditMode" placeholder="Model / Manufacturer / Power" />
+        </div>
+
+        <!-- Operating Room Materials -->
+        <div class="field col-12">
+          <div class="section-box" [ngClass]="{'edit-mode': isEditMode}">
+            <label class="section-label">Operating Room Materials</label>
+            <div class="flex flex-wrap gap-3">
+              <ng-container *ngFor="let m of materialOptions">
+                <p-checkbox name="material" [value]="m" [(ngModel)]="summary.operatingMaterials" [disabled]="!isEditMode"></p-checkbox>
+                <label class="ml-2">{{m}}</label>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <!-- Preoperative Treatments -->
+        <div class="field col-12">
+          <div class="section-box" [ngClass]="{'edit-mode': isEditMode}">
+            <label class="section-label">Preoperative Treatments</label>
+            <div class="flex flex-wrap gap-3">
+              <ng-container *ngFor="let t of treatmentOptions">
+                <p-checkbox name="preop" [value]="t" [(ngModel)]="summary.preopTreatments" [disabled]="!isEditMode"></p-checkbox>
+                <label class="ml-2">{{t}}</label>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+        <!-- Postoperative Appointments -->
+        <div class="field col-12">
+          <div class="section-box" [ngClass]="{'edit-mode': isEditMode}">
+            <label class="section-label">Postoperative Appointments</label>
+            <div class="flex flex-wrap gap-3">
+              <ng-container *ngFor="let a of appointmentOptions">
+                <p-checkbox name="postop" [value]="a" [(ngModel)]="summary.postopAppointments" [disabled]="!isEditMode"></p-checkbox>
+                <label class="ml-2">{{a}}</label>
+              </ng-container>
+            </div>
+          </div>
+        </div>
+
+    <!-- Boutons -->
+    <div class="field col-12 ">
+      <ng-container *ngIf="!isEditMode">
+        <div class="flex justify-content-end">
+          <p-button label="Edit" 
+            icon="pi pi-pencil" 
+            (click)="toggleEditMode()"
+            [style]="{'width': '100%'}">
+            </p-button>
+        </div>
+      </ng-container>
+
+        <ng-container *ngIf="isEditMode">
+          <div class="grid">
+              <div class="col-12 md:col-6">
+                <p-button label="Save" icon="pi pi-save" severity="success" (click)="save()" [style]="{ width: '100%' }"></p-button>
+              </div>
+              <div class="col-12 md:col-6">
+                <p-button label="Cancel" icon="pi pi-times" severity="warning" (click)="toggleEditMode()" [style]="{ width: '100%' }"></p-button>
+             </div>
+           </div>
+        </ng-container>
+        </div>
+     </div>
+    </div>
+  </div>
+</div>
+      
+
+     

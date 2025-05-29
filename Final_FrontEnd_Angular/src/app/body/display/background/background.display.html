@@ -1,0 +1,262 @@
+<p-toast></p-toast>
+
+<!-- Grille pour le bloc "Medical background" et "Medical treatments" -->
+<div class="grid">
+  <div class="col">
+    <div class="card mb-0">
+      <!-- Accordéon pour afficher plusieurs sections repliables -->
+      <p-accordion [multiple]="true">
+
+        <!-- Onglet "Medical background" -->
+        <p-accordionTab header="Medical background">
+          <p-tree
+            [value]="medicalBackgrounds"
+            selectionMode="checkbox"
+            (onNodeSelect)="onNodeSelect($event, medicalBackgrounds, selectedMedicalBackgrounds)"
+            (onNodeUnselect)="onNodeUnselect($event, medicalBackgrounds, selectedMedicalBackgrounds)"
+            class="p-tree-checkbox"
+            [propagateSelectionDown]="false"
+          >
+            <!-- Template personnalisé pour chaque nœud -->
+            <ng-template let-node pTemplate="default">
+              <div class="mb-2" style="position: relative">
+                <!-- Affiche le nom du nœud avec un style particulier si c’est "Other" -->
+                <span
+                  [ngStyle]="{
+                    'background-color': node.label === 'Other' ? 'transparent' : '',
+                    'padding': '0.2rem 0.4rem',
+                    'border-radius': '4px',
+                    'display': 'inline-block'
+                  }"
+                >
+                  {{ node.label }}
+                </span>
+
+                <!-- Si le nœud est "Other" et sélectionné, affiche un textarea -->
+                <div
+                  *ngIf="node.label === 'Other' && node.key && isOtherSelected(node.key, selectedMedicalBackgrounds)"
+                  class="mt-2 custom-note-container"
+                  (click)="$event.stopPropagation()"
+                >
+                  <label [for]="'comment-' + node.key" class="block mb-2 font-medium">
+                    Comment for {{ node.key }} - Other:
+                  </label>
+
+                  <textarea
+                    [id]="'comment-' + node.key"
+                    class="p-inputtext w-full"
+                    [(ngModel)]="otherComments[node.key]"
+                    rows="3"
+                    placeholder="Please provide details..."
+                    style="background-color: white; border: 1px solid #ccc; border-radius: 6px;"
+                  ></textarea>
+
+                  <button
+                    type="button"
+                    pButton
+                    icon="pi pi-check"
+                    label="Save note"
+                    class="mt-2"
+                    (click)="saveAndHideOther(node.key, selectedMedicalBackgrounds)"
+                  ></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-tree>
+        </p-accordionTab>
+
+        <!-- Onglet "Medical treatments" avec logique identique -->
+        <p-accordionTab header="Medical treatments">
+          <p-tree
+            [value]="medicalTreatments"
+            selectionMode="checkbox"
+            (onNodeSelect)="onNodeSelect($event, medicalTreatments, selectedMedicalTreatments)"
+            (onNodeUnselect)="onNodeUnselect($event, medicalTreatments, selectedMedicalTreatments)"
+            class="p-tree-checkbox"
+            [propagateSelectionDown]="false"
+          >
+            <ng-template let-node pTemplate="default">
+              <div class="mb-2" style="position: relative">
+                <span
+                  [ngStyle]="{
+                    'background-color': node.label === 'Other' ? 'transparent' : '',
+                    'padding': '0.2rem 0.4rem',
+                    'border-radius': '4px',
+                    'display': 'inline-block'
+                  }"
+                >
+                  {{ node.label }}
+                </span>
+
+                <div
+                  *ngIf="node.label === 'Other' && node.key && isOtherSelected(node.key, selectedMedicalTreatments)"
+                  class="mt-2 custom-note-container"
+                  (click)="$event.stopPropagation()"
+                >
+                  <label [for]="'comment-' + node.key" class="block mb-2 font-medium">
+                    Comment for {{ node.key }} - Other:
+                  </label>
+
+                  <textarea
+                    [id]="'comment-' + node.key"
+                    class="p-inputtext w-full"
+                    [(ngModel)]="otherComments[node.key]"
+                    rows="3"
+                    placeholder="Please provide details..."
+                    style="background-color: white; border: 1px solid #ccc; border-radius: 6px;"
+                  ></textarea>
+
+                  <button
+                    type="button"
+                    pButton
+                    icon="pi pi-check"
+                    label="Save note"
+                    class="mt-2"
+                    (click)="saveAndHideOther(node.key, selectedMedicalTreatments)"
+                  ></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-tree>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  </div>
+</div>
+
+<!-- Grille pour la partie OD -->
+<div class="grid">
+  <div class="col">
+    <div class="card mb-0">
+
+      <!-- Titre OD -->
+      <div class="flex justify-content-between mb-4">
+        <div class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3" style="left: -2rem">
+          <span [ngClass]="isMobileDevice ? 'pl-2' : 'pl-4'" class="font-bold text-xl text-cyan-600">OD</span>
+        </div>
+      </div>
+
+      <!-- Accordéon pour la partie ophtalmologique -->
+      <p-accordion [multiple]="true">
+
+        <!-- Onglet "Ophthalmological history" -->
+        <p-accordionTab header="Ophthalmological history">
+          <p-tree
+            [value]="ophthalmologicalHistorys"
+            selectionMode="checkbox"
+            class="p-tree-checkbox"
+            [propagateSelectionDown]="false"
+            (onNodeSelect)="onNodeSelect($event, ophthalmologicalHistorys, selectedOphthalmologicalHistorys)"
+            (onNodeUnselect)="onNodeUnselect($event, ophthalmologicalHistorys, selectedOphthalmologicalHistorys)"
+          >
+            <ng-template let-node pTemplate="default">
+              <div class="mb-2" style="position: relative">
+                <span
+                  [ngStyle]="{
+                    'background-color': node.label === 'Other' ? 'transparent' : '',
+                    'padding': '0.2rem 0.4rem',
+                    'border-radius': '4px',
+                    'display': 'inline-block'
+                  }"
+                >
+                  {{ node.label }}
+                </span>
+
+                <div
+                  *ngIf="node.label === 'Other' && node.key && isOtherSelected(node.key, selectedOphthalmologicalHistorys)"
+                  class="mt-2 custom-note-container"
+                  (click)="$event.stopPropagation()"
+                >
+                  <label [for]="'comment-' + node.key" class="block mb-2 font-medium">
+                    Comment for {{ node.key }} - Other:
+                  </label>
+
+                  <textarea
+                    [id]="'comment-' + node.key"
+                    class="p-inputtext w-full"
+                    [(ngModel)]="otherComments[node.key]"
+                    rows="3"
+                    placeholder="Please provide details..."
+                    style="background-color: white; border: 1px solid #ccc; border-radius: 6px;"
+                  ></textarea>
+
+                  <button
+                    type="button"
+                    pButton
+                    icon="pi pi-check"
+                    label="Save note"
+                    class="mt-2"
+                    (click)="saveAndHideOther(node.key, selectedOphthalmologicalHistorys)"
+                  ></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-tree>
+        </p-accordionTab>
+
+        <!-- Onglet "Ophthalmological treatments" -->
+        <p-accordionTab header="Ophthalmological treatments">
+          <p-tree
+            [value]="ophthalmologicalTreatments"
+            selectionMode="checkbox"
+            (onNodeSelect)="onNodeSelect($event, ophthalmologicalTreatments, selectedOphthalmologicalTreatments)"
+            (onNodeUnselect)="onNodeUnselect($event, ophthalmologicalTreatments, selectedOphthalmologicalTreatments)"
+            class="p-tree-checkbox"
+            [propagateSelectionDown]="false"
+          >
+            <ng-template let-node pTemplate="default">
+              <div class="mb-2" style="position: relative">
+                <span
+                  [ngStyle]="{
+                    'background-color': node.label === 'Other' ? 'transparent' : '',
+                    'padding': '0.2rem 0.4rem',
+                    'border-radius': '4px',
+                    'display': 'inline-block'
+                  }"
+                >
+                  {{ node.label }}
+                </span>
+
+                <div
+                  *ngIf="node.label === 'Other' && node.key && isOtherSelected(node.key, selectedOphthalmologicalTreatments)"
+                  class="mt-2 custom-note-container"
+                  (click)="$event.stopPropagation()"
+                >
+                  <label [for]="'comment-' + node.key" class="block mb-2 font-medium">
+                    Comment for {{ node.key }} - Other:
+                  </label>
+
+                  <textarea
+                    [id]="'comment-' + node.key"
+                    class="p-inputtext w-full"
+                    [(ngModel)]="otherComments[node.key]"
+                    rows="3"
+                    placeholder="Please provide details..."
+                    style="background-color: white; border: 1px solid #ccc; border-radius: 6px;"
+                  ></textarea>
+
+                  <button
+                    type="button"
+                    pButton
+                    icon="pi pi-check"
+                    label="Save note"
+                    class="mt-2"
+                    (click)="saveAndHideOther(node.key, selectedOphthalmologicalTreatments)"
+                  ></button>
+                </div>
+              </div>
+            </ng-template>
+          </p-tree>
+        </p-accordionTab>
+
+      </p-accordion>
+    </div>
+  </div>
+</div>
+
+<!-- Bouton global Save -->
+<div class="p-fluid p-formgrid grid mt-1">
+  <div class="field col">
+    <p-button label="Save" icon="pi pi-save"></p-button>
+  </div>
+</div>

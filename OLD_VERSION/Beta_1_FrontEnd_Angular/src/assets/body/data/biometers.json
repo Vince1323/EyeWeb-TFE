@@ -1,0 +1,52 @@
+{
+    "biometers": [
+        {
+            "id": "HAAG_STREIT_LENSTAR_LS_900",
+            "name": "HAAG-STREIT LENSTAR LS 900"
+        },
+        {
+            "id": "HAAG_STREIT_EYESTAR_ES_900",
+            "name": "HAAG-STREIT EYESTAR ES 900"
+        },
+        {
+            "id": "ZEISS_IOLMASTER_500",
+            "name": "ZEISS IOLMASTER 500"
+        },
+        {
+            "id": "ZEISS_IOLMASTER_700",
+            "name": "ZEISS IOLMASTER 700"
+        },
+        {
+            "id": "NIDEK_AL_SCAN",
+            "name": "NIDEK AL-SCAN"
+        },
+        {
+            "id": "TOMEY_OA_2000",
+            "name": "TOMEY OA 2000"
+        },
+        {
+            "id": "TOPCON_ALADDIN",
+            "name": "TOPCON Aladdin"
+        },
+        {
+            "id": "OCULUS_PENTACAM_AXL",
+            "name": "OCULUS PENTACAM AXL"
+        },
+        {
+            "id": "ZIEMER_GALILEI_G6",
+            "name": "ZIEMER GALILEI G6"
+        },
+        {
+            "id": "MOVU_ALCON_ARGOS",
+            "name": "MOVU/ALCON ARGOS"
+        },
+        {
+            "id": "HEIDELBERG_ANTERION",
+            "name": "HEIDELBERG ANTERION"
+        },
+        {
+            "id": "OTHER_OPTICAL_BIOMETRY_DEVICE",
+            "name": "Other optical biometry device"
+        }
+    ]
+}

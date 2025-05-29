@@ -1,0 +1,60 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="grid" *ngIf="patient">
+  <div class="col">
+    <div class="card mb-0">
+      <div class="p-fluid p-formgrid grid">
+
+
+
+        <!-- Acuité visuelle -->
+        <div class="field col-12 md:col-6">
+          <label for="acuityOD">Visual Acuity OD</label>
+          <input pInputText id="acuityOD" [(ngModel)]="refractiveData.visualAcuityOD" [disabled]="!isEditMode" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="acuityOS">Visual Acuity OS</label>
+          <input pInputText id="acuityOS" [(ngModel)]="refractiveData.visualAcuityOS" [disabled]="!isEditMode" />
+        </div>
+
+        <!-- Prescription -->
+        <div class="field col-12 md:col-6">
+          <label for="prescriptionOD">Prescription OD</label>
+          <input pInputText id="prescriptionOD" [(ngModel)]="refractiveData.prescriptionOD" [disabled]="!isEditMode" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label for="prescriptionOS">Prescription OS</label>
+          <input pInputText id="prescriptionOS" [(ngModel)]="refractiveData.prescriptionOS" [disabled]="!isEditMode" />
+        </div>
+
+        <!-- Commentaires -->
+        <div class="field col-12">
+          <label for="comments">Comments</label>
+          <textarea pInputTextarea id="comments" rows="3" [(ngModel)]="refractiveData.comments" [disabled]="!isEditMode"></textarea>
+        </div>
+
+        <!-- Boutons -->
+        <div class="field col-12 ">
+          <ng-container *ngIf="!isEditMode">
+            <div class="flex justify-content-end">
+              <p-button label="Edit" icon="pi pi-pencil" (click)="toggleEdit()" [style]="{ width: '100%' }"></p-button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="isEditMode">
+            <div class="grid">
+              <div class="col-12 md:col-6">
+                <p-button label="Save" icon="pi pi-save" severity="success" (click)="save()" [style]="{ width: '100%' }"></p-button>
+              </div>
+              <div class="col-12 md:col-6">
+                <p-button label="Cancel" icon="pi pi-times" severity="warning" (click)="toggleEdit()" [style]="{ width: '100%' }"></p-button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

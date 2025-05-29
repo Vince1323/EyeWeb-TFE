@@ -1,0 +1,169 @@
+<p-toast></p-toast>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 800" class="fixed left-0 top-0 min-h-screen min-w-screen" preserveAspectRatio="none">
+    <rect [attr.fill]="dark ? 'var(--primary-900)' : 'var(--primary-500)'" width="1600" height="800" />
+    <path
+        [attr.fill]="dark ? 'var(--primary-800)' : 'var(--primary-400)'"
+        d="M478.4 581c3.2 0.8 6.4 1.7 9.5 2.5c196.2 52.5 388.7 133.5 593.5 176.6c174.2 36.6 349.5 29.2 518.6-10.2V0H0v574.9c52.3-17.6 106.5-27.7 161.1-30.9C268.4 537.4 375.7 554.2 478.4 581z"
+    />
+    <path
+        [attr.fill]="dark ? 'var(--primary-700)' : 'var(--primary-300)'"
+        d="M181.8 259.4c98.2 6 191.9 35.2 281.3 72.1c2.8 1.1 5.5 2.3 8.3 3.4c171 71.6 342.7 158.5 531.3 207.7c198.8 51.8 403.4 40.8 597.3-14.8V0H0v283.2C59 263.6 120.6 255.7 181.8 259.4z"
+    />
+    <path
+        [attr.fill]="dark ? 'var(--primary-600)' : 'var(--primary-200)'"
+        d="M454.9 86.3C600.7 177 751.6 269.3 924.1 325c208.6 67.4 431.3 60.8 637.9-5.3c12.8-4.1 25.4-8.4 38.1-12.9V0H288.1c56 21.3 108.7 50.6 159.7 82C450.2 83.4 452.5 84.9 454.9 86.3z"
+    />
+    <path
+        [attr.fill]="dark ? 'var(--primary-500)' : 'var(--primary-100)'"
+        d="M1397.5 154.8c47.2-10.6 93.6-25.3 138.6-43.8c21.7-8.9 43-18.8 63.9-29.5V0H643.4c62.9 41.7 129.7 78.2 202.1 107.4C1020.4 178.1 1214.2 196.1 1397.5 154.8z"
+    />
+</svg>
+<div class="px-5 min-h-screen flex justify-content-center align-items-center">
+    <div class="border-1 surface-border surface-card border-round py-7 px-4 md:px-7 z-1">
+        <div class="mb-4">
+            <div class="text-900 text-xl font-bold mb-2">Register</div>
+            <span class="text-600 font-medium">Let's get started</span>
+        </div>
+        <form [formGroup]="registerForm" (ngSubmit)="saveRegister()" novalidate>
+            <div class="flex flex-column">
+                <div class="p-formgrid grid">
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-user"></i>
+                            <input id="firstname" type="text" placeholder="Firstname" class="w-full md:w-25rem" pInputText formControlName="firstname" />
+                            <small class="p-error block" *ngIf="registerForm.get('firstname')?.invalid && registerForm.get('firstname')?.dirty">The firstname is not available.</small>
+                        </span>
+                    </div>
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-user"></i>
+                            <input id="lastname" type="text" placeholder="Lastname" class="w-full md:w-25rem" pInputText formControlName="lastname" />
+                            <small class="p-error block" *ngIf="registerForm.get('lastname')?.invalid && registerForm.get('lastname')?.dirty">The lastname is not available.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <div class="p-inputgroup">
+                                <span class="p-inputgroup-addon">+32</span>
+                                <input id="phone" type="text" placeholder="Phone number" pInputText formControlName="phone" />
+                            </div>
+                        </span>
+                    </div>
+                    <div formGroupName="address" class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-flag"></i>
+                            <input id="country" type="text" placeholder="Country" class="w-full md:w-25rem" pInputText formControlName="country" />
+                            <small class="p-error block" *ngIf="registerForm.get('country')?.invalid && registerForm.get('country')?.dirty">The country is not available.</small>
+                        </span>
+                    </div>
+                </div>
+                <div formGroupName="address" class="p-formgrid grid">
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-building"></i>
+                            <input id="city" type="text" placeholder="City" class="w-full md:w-25rem" pInputText formControlName="city" />
+                            <small class="p-error block" *ngIf="registerForm.get('city')?.invalid && registerForm.get('city')?.dirty">The city is not available.</small>
+                        </span>
+                    </div>
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-building"></i>
+                            <input id="zipCode" type="text" placeholder="Zip code" class="w-full md:w-25rem" pInputText formControlName="zipCode" />
+                            <small class="p-error block" *ngIf="registerForm.get('zipCode')?.invalid && registerForm.get('zipCode')?.dirty">The zipCode is not available.</small>
+                        </span>
+                    </div>
+                </div>
+                <div formGroupName="address" class="p-formgrid grid">
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-building"></i>
+                            <input id="street" type="text" placeholder="Street" class="w-full md:w-25rem" pInputText formControlName="street" />
+                            <small class="p-error block" *ngIf="registerForm.get('street')?.invalid && registerForm.get('street')?.dirty">The street is not available.</small>
+                        </span>
+                    </div>
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-building"></i>
+                            <input id="streetNumber" type="text" placeholder="Street number" class="w-full md:w-25rem" pInputText formControlName="streetNumber" />
+                            <small class="p-error block" *ngIf="registerForm.get('streetNumber')?.invalid && registerForm.get('streetNumber')?.dirty">The street number is not available.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div formGroupName="address" class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-building"></i>
+                            <input id="boxNumber" type="text" placeholder="Box number" class="w-full md:w-25rem" pInputText formControlName="boxNumber" />
+                        </span>
+                    </div>
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-envelope"></i>
+                            <input id="email1" type="text" placeholder="Email address" class="w-full md:w-25rem" pInputText formControlName="email" />
+                            <small class="p-error block" *ngIf="registerForm.get('email')?.invalid && registerForm.get('email')?.dirty">The email is not available.</small>
+                        </span>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-lock"></i>
+                            <p-password id="password1" placeholder="Password" [toggleMask]="true" [feedback]="true" inputStyleClass="w-full md:w-25rem" formControlName="password">
+                                <ng-template pTemplate="footer">
+                                    <p-divider></p-divider>
+                                    <p class="mt-2">Must have:</p>
+                                    <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                                        <li>At least one lowercase</li>
+                                        <li>At least one uppercase</li>
+                                        <li>At least one numeric</li>
+                                        <li>Minimum 8 characters</li>
+                                    </ul>
+                                </ng-template>
+                            </p-password>
+                        </span>
+                    </div>
+                    <div class="field col">
+                        <p-calendar
+                            inputStyleClass="w-full md:w-25rem"
+                            formControlName="birthDate"
+                            [iconDisplay]="'input'"
+                            [showIcon]="true"
+                            [minDate]="minDate"
+                            [maxDate]="maxDate"
+                            dateFormat="dd-mm-yy"
+                            placeholder="Date of birth DD-MM-YYYY"
+                            appendTo="body"
+                            previousicon
+                        >
+                        </p-calendar>
+                        <small class="p-error block" *ngIf="registerForm.get('birthDate')?.invalid && registerForm.get('birthDate')?.dirty">The birth date is not available.</small>
+                    </div>
+                </div>
+                <div class="p-formgrid grid">
+                    <div class="field col">
+                        <span class="p-input-icon-left w-full mb-4">
+                            <i class="pi pi-lock"></i>
+                            <p-password id="confirmPassword" placeholder="Repeat Password" [toggleMask]="true" [feedback]="false" inputStyleClass="w-full md:w-25rem" formControlName="confirmPassword">
+                            </p-password>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mb-6 flex flex-wrap">
+                    <p-checkbox name="checkbox" value="val" formControlName="hasReadTermsAndConditions" styleClass="mr-2" [binary]="true"></p-checkbox>
+                    <label for="checkbox" class="text-900 font-medium mr-2">I have read the</label>
+                    <a class="font-medium no-underline text-blue-500 cursor-pointer" (click)="displayTerms(true)">Terms and Conditions</a>
+                </div>
+
+                <button pButton pRipple [disabled]="!registerForm.valid" type="submit" label="Sign Up" class="w-full mb-4" [loading]="loading"></button>
+                <span class="font-medium text-600">Already have an account? <a class="font-medium no-underline ml-2 text-blue-500 cursor-pointer" [routerLink]="['/']">Login</a></span>
+            </div>
+        </form>
+    </div>
+</div>
+
+<terms-display [display]="isReadTerms" (notDisplay)="displayTerms($event)"></terms-display>
+
+<app-config [minimal]="true"></app-config>

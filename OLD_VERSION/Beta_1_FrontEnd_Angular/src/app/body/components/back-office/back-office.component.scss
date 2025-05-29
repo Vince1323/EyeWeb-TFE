@@ -1,0 +1,46 @@
+.custom-search {
+    position: relative;
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--surface-border); // PrimeNG border
+    border-radius: 12px;
+    padding: 1rem 0.75rem;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+    transition: all 0.2s ease-in-out;
+    height: 3.5rem;
+    background-color: var(--surface);        // PrimeNG light/dark support
+    font-family: var(--font-family);         // Cohérence avec tableau
+  
+    i {
+      margin-right: 1.5rem;
+      color: var(--text-color-secondary);   
+      font-size: 1.2rem;
+    }
+  
+    input {
+      flex: 1;
+      border: none;
+      outline: none;
+      box-shadow: none !important;
+      font-size: 1.0rem;                  
+      color: var(--text-color);
+      background: transparent;
+      font-family: var(--font-family);
+  
+      &::placeholder {
+        color: var(--text-color-secondary);
+        font-style: bolt;
+        opacity: 1;
+      }
+    }
+  
+    &:focus-within {
+      border-color: var(--primary-color);   
+      box-shadow: 0 0 0 0.2rem rgba(66, 165, 245, 0.2);
+  
+      i {
+        color: var(--primary-color);
+      }
+    }
+  }
+  

@@ -1,0 +1,57 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="grid" *ngIf="patient">
+  <div class="col">
+    <div class="card mb-0">
+      <div class="p-fluid p-formgrid grid">
+
+
+        <!-- Données Glaucome -->
+        <div class="field col-12 md:col-6">
+          <label>IOP OD</label>
+          <input pInputText [(ngModel)]="glaucomaData.pressureOD" [disabled]="!isEditMode" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label>IOP OS</label>
+          <input pInputText [(ngModel)]="glaucomaData.pressureOS" [disabled]="!isEditMode" />
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label>Visual Field OD</label>
+          <input pInputText [(ngModel)]="glaucomaData.visualFieldOD" [disabled]="!isEditMode" />
+        </div>
+        <div class="field col-12 md:col-6">
+          <label>Visual Field OS</label>
+          <input pInputText [(ngModel)]="glaucomaData.visualFieldOS" [disabled]="!isEditMode" />
+        </div>
+
+        <div class="field col-12">
+          <label>Comment</label>
+          <textarea pInputTextarea rows="3" [(ngModel)]="glaucomaData.comment" [disabled]="!isEditMode"></textarea>
+        </div>
+
+        <!-- Boutons -->
+        <div class="field col-12">
+          <ng-container *ngIf="!isEditMode">
+            <div class="flex justify-content-end">
+              <p-button label="Edit" icon="pi pi-pencil" (click)="toggleEdit()" [style]="{ width: '100%' }"></p-button>
+            </div>
+          </ng-container>
+
+          <ng-container *ngIf="isEditMode">
+            <div class="grid">
+              <div class="col-12 md:col-6">
+                <p-button label="Save" icon="pi pi-save" (click)="save()" severity="success" [style]="{ width: '100%' }"></p-button>
+              </div>
+              <div class="col-12 md:col-6">
+                <p-button label="Cancel" icon="pi pi-times" (click)="toggleEdit()" severity="warning" [style]="{ width: '100%' }"></p-button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

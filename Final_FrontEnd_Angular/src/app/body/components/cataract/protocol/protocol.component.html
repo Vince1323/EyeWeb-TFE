@@ -1,0 +1,71 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="grid" *ngIf="patient">
+ 
+<!-- Bloc formulaire protocol -->
+<div class="grid" *ngIf="patient">
+  <div class="col">
+    <div class="card mb-0">
+      <div class="p-fluid p-formgrid grid">
+
+        <div class="field col-12 md:col-4">
+          <label>Surgery Type</label>
+          <p-dropdown [options]="surgeryTypes" [(ngModel)]="protocol.surgeryType" placeholder="Select" [disabled]="!isEditMode"></p-dropdown>
+        </div>
+
+        <div class="field col-12 md:col-4">
+          <label>Anesthesia</label>
+          <p-dropdown [options]="anesthesiaTypes" [(ngModel)]="protocol.anesthesia" placeholder="Select" [disabled]="!isEditMode"></p-dropdown>
+        </div>
+
+        <div class="field col-12 md:col-4">
+          <label>Operating Eye</label>
+          <p-dropdown [options]="eyes" [(ngModel)]="protocol.eye" placeholder="OD / OS / OU" [disabled]="!isEditMode"></p-dropdown>
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label>Incision Location</label>
+          <input pInputText [(ngModel)]="protocol.incision" [disabled]="!isEditMode" />
+        </div>
+
+        <div class="field col-12 md:col-6">
+          <label>Technique</label>
+          <input pInputText [(ngModel)]="protocol.technique" [disabled]="!isEditMode" />
+        </div>
+
+        <div class="field col-12">
+          <label>IOL Model</label>
+          <input pInputText [(ngModel)]="protocol.iolModel" [disabled]="!isEditMode" />
+        </div>
+
+        <div class="field col-12">
+          <label>Other Materials</label>
+          <textarea pInputTextarea rows="3" [(ngModel)]="protocol.materials" [disabled]="!isEditMode"></textarea>
+        </div>
+
+        <div class="field col-12">
+          <label>Comments</label>
+          <textarea pInputTextarea rows="3" [(ngModel)]="protocol.comment" [disabled]="!isEditMode"></textarea>
+        </div>
+
+        <div class="field col-12">
+          <ng-container *ngIf="!isEditMode">
+            <p-button label="Edit" icon="pi pi-pencil" (click)="toggleEditMode()" class="w-full"></p-button>
+          </ng-container>
+          <ng-container *ngIf="isEditMode">
+            <div class="grid">
+              <div class="col-6">
+                <p-button label="Save" icon="pi pi-save" severity="success" (click)="save()" class="w-full"></p-button>
+              </div>
+              <div class="col-6">
+                <p-button label="Cancel" icon="pi pi-times" severity="warning" (click)="toggleEditMode()" class="w-full"></p-button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

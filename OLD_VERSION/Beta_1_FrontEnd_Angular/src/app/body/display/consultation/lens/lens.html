@@ -1,0 +1,18 @@
+<p-accordion>
+    <p-accordionTab>
+        <ng-template pTemplate="header">
+            <span class="flex align-items-center gap-2 w-full">
+                <span class="font-bold wrap-label" [ngClass]="{'text-red-500': abnormalLabels.length > 0}">
+                    Lens{{ abnormalLabels.length > 0 ? ' : ' + abnormalLabels.join(' - ') : '' }}
+                </span>
+            </span>
+        </ng-template>
+        <p-tree
+                class="w-full md:w-30rem"
+                selectionMode="checkbox"
+                [value]="normal"
+                [(selection)]="selectedNodes"
+                (selectionChange)="checkAbnormal()"
+        ></p-tree>
+    </p-accordionTab>
+</p-accordion>

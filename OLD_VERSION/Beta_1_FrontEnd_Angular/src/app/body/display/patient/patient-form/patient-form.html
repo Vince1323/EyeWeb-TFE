@@ -1,0 +1,78 @@
+<div class="card p-fluid">
+    <p class="font-italic text-red-500">* Required Field</p>
+    <form [formGroup]="patientForm" novalidate>
+        <div class="p-fluid p-formgrid grid">
+            <div class="field col-12 md:col-4">
+                <label for="firstname" class="block font-medium mb-2">Firstname
+                    <span class="font-bold mr-3 text-red-500 w-2">*</span></label>
+                <input id="firstname" type="text" placeholder="Firstname" class="p-inputtext p-component p-element"
+                    pInputText formControlName="firstname" />
+                <small class="p-error block"
+                    *ngIf="patientForm.get('firstname') ?.invalid && patientForm.get('firstname')?.dirty">
+                    The firstname is not available.
+                </small>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="lastname" class="block font-medium mb-2">Lastname
+                    <span class="font-bold mr-3 text-red-500 w-2">*</span></label>
+                <input id="lastname" type="text" placeholder="Lastname" class="p-inputtext p-component p-element"
+                    pInputText formControlName="lastname" />
+                <small class="p-error block" *ngIf="
+                                patientForm.get('lastname')?.invalid &&
+                                patientForm.get('lastname')?.dirty
+                            ">The lastname is not available.</small>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="gender" class="block font-medium mb-2">Gender
+                    <span class="font-bold mr-3 text-red-500 w-2">*</span></label>
+                <p-dropdown [options]="genders" formControlName="gender" optionLabel="name" optionValue="name"
+                    [showClear]="true" placeholder="Select a gender" id="gender">
+                </p-dropdown>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="phone" class="block font-medium mb-2">Phone number</label>
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">+32</span>
+                    <input id="phone" type="text" placeholder="Phone number" class="p-inputtext p-component p-element"
+                        pInputText formControlName="phone" />
+                </div>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="niss" class="block font-medium mb-2">SSN</label>
+                <p-inputMask mask="99.99.99-999.99" formControlName="niss" placeholder="99.99.99-999.99"
+                    id="niss"></p-inputMask>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="email1" class="block font-medium mb-2">Email</label>
+                <input id="email1" type="text" placeholder="Email address" class="p-inputtext p-component p-element"
+                    pInputText formControlName="mail" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="birthDate" class="block font-medium mb-2">Date of birth
+                    <span class="font-bold mr-3 text-red-500 w-2">*</span></label>
+                <p-calendar formControlName="birthDate" [iconDisplay]="'input'" [showIcon]="true" [minDate]="minDate"
+                    [maxDate]="maxDate" dateFormat="dd-mm-yy" placeholder="DD-MM-YY" appendTo="body" id="birthDate">
+                </p-calendar>
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="job" class="block text-900 font-medium mb-2">Job</label>
+                <input id="job" type="text" placeholder="Job" class="p-inputtext p-component p-element" pInputText
+                    formControlName="job" />
+            </div>
+            <div class="field col-12 md:col-4">
+                <label for="hobbies" class="block text-900 font-medium mb-2">Hobbies</label>
+                <input id="hobbies" type="text" placeholder="Hobbies" class="p-inputtext p-component p-element"
+                    pInputText formControlName="hobbies" />
+            </div>
+        </div>
+    </form>
+</div>
+<div class="grid">
+    <div class="col">
+        <button *ngIf="!importModalOCR" pButton pRipple label="Save" icon="pi pi-save" class="p-button w-full" [disabled]="patientForm.invalid"
+            (click)="save()"></button>
+        <button *ngIf="importModalOCR" pButton [disabled]="!patientForm.valid" pRipple label="Next"
+            class="w-full text-xl" icon="pi pi-angle-right" iconPos="right"
+            (click)="save()"></button>
+    </div>
+</div>

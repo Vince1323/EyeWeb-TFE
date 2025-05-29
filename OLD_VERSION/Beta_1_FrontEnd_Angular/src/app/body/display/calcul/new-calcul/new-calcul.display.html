@@ -1,0 +1,92 @@
+<p-dialog *ngIf="!loading" [(visible)]="visible" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false"
+    [resizable]="false" [maximizable]="true" (onHide)="closeErrorModal()">
+    <ng-template pTemplate="header">
+        <div class="inline-flex align-items-center justify-content-center gap-2">
+            <div class="flex justify-content-between mb-4">
+                <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                    style="left: -1.5rem">
+                    <span class="font-bold text-xl text-blue-600 pl-4">IOL Power Calculator</span>
+                </div>
+                <div class="flex align-items-center justify-content-center"></div>
+            </div>
+        </div>
+    </ng-template>
+    <p-selectButton [options]="sideOptions" [(ngModel)]="selectedSide" optionLabel="name" optionValue="value"
+        (click)="selectSide()" class="px-2" />
+    <div class="grid">
+        <div class="col" *ngIf="selectedSide == 'OD' || selectedSide == 'OU'">
+            <new-calcul-form [patient]="patient" [idOrga]="idOrga" [calcul]="calculOD"
+                [desabledCalcul]="desabledCalculOD" [side]="'OD'"
+                [sideDisplaySecondEye]="selectedSide"
+                (disabledStatusChange)="updateDisabledCalculOD($event)"></new-calcul-form>
+        </div>
+        <div class="max-w-3rem" *ngIf="selectedSide == 'OU'">
+            <p-divider layout="vertical" type="dashed" align="bottom" *ngIf="!isMobileDevice">
+                <p-button icon="pi pi-angle-double-right" iconPos="right" (onClick)="copyCalcul('OD')"></p-button>
+                <br />
+                <p></p>
+                <p-button icon="pi pi-angle-double-left" iconPos="right" (onClick)="copyCalcul('OS')"></p-button>
+            </p-divider>
+        </div>
+        <div class="col" *ngIf="selectedSide == 'OS' || selectedSide == 'OU'">
+            <div class="flex justify-content-center flex-wrap mb-4" *ngIf="isMobileDevice && selectedSide == 'OU'">
+                <p-button class="mr-2" icon="pi pi-angle-double-down" iconPos="right"
+                    (onClick)="copyCalcul('OD')"></p-button>
+                <p-button class="ml-2" icon="pi pi-angle-double-up" iconPos="right"
+                    (onClick)="copyCalcul('OS')"></p-button>
+            </div>
+            <new-calcul-form [patient]="patient" [idOrga]="idOrga" [calcul]="calculOS"
+                [desabledCalcul]="desabledCalculOS" [side]="'OS'"
+                [sideDisplaySecondEye]="selectedSide"
+                (disabledStatusChange)="updateDisabledCalculOS($event)"></new-calcul-form>
+        </div>
+    </div>
+    <div class="p-fluid mt-3">
+        <p-button label="Calculate" icon="pi pi-calculator" (onClick)="calculate()"
+            [disabled]="disabledCalcul()"></p-button>
+    </div>
+</p-dialog>
+<!--MODAL CONFIRM-->
+<p-confirmDialog #cd>
+    <ng-template pTemplate="headless" let-message>
+        <div class="flex flex-column align-items-center p-5 surface-overlay border-round">
+            <div class="border-circle bg-primary inline-flex justify-content-center align-items-center h-6rem w-6rem">
+                <i class="pi pi-question text-5xl"></i>
+            </div>
+            <span class="font-bold text-2xl block mb-2 mt-4">
+                {{ message.header }}
+            </span>
+            <p-scrollPanel [style]="{ width: '100%', height: '300px' }">
+                <div *ngFor="let eye of messageError | keyvalue">
+                    <h5>Errors for {{ eye.key }}</h5>
+                    <div *ngFor="let formula of eye.value | keyvalue">
+                        <h6>Formula: {{ formula.key }}</h6>
+                        <ul>
+                            <li *ngFor="let error of formula.value">
+                                {{ error }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </p-scrollPanel>
+            <div class="flex align-items-center gap-2 mt-4">
+                <button pButton label="Deselect formula(s) and continue" (click)="cd.accept()">
+                </button>
+                <button pButton label="Cancel" (click)="cd.reject()">
+                </button>
+            </div>
+        </div>
+    </ng-template>
+</p-confirmDialog>
+<!--MODAL LOAD-->
+<p-dialog *ngIf="loading" [(visible)]="visible" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false"
+    [resizable]="false" [closable]="false">
+    <div class="flex justify-content-between mb-4">
+        <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+            style="left: -1.5rem">
+            <span class="font-bold text-xl text-blue-600 pl-4">Loading..</span>
+        </div>
+        <div class="flex align-items-center justify-content-center"></div>
+    </div>
+    <p-progressBar mode="indeterminate" [style]="{ height: '10px' }"></p-progressBar>
+</p-dialog>

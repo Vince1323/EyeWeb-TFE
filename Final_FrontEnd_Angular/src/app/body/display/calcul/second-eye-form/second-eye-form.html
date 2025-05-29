@@ -1,0 +1,105 @@
+<div class="card mb-4 p-3 bg-blue-100">
+
+    <!-- Sélection Biometry -->
+    <div class="flex flex-column md:flex-row align-items-center gap-3 mb-4" *ngIf="lightExam; else noData">
+        <label class="w-full md:w-auto" for="input-metakey">Biometry {{ sideSecondEye }}</label>
+        <p-dropdown
+            class="w-full md:w-20rem"
+            [options]="biometries"
+            [(ngModel)]="lightExam"
+            (onChange)="selectBiometry(lightExam.id)"
+            optionLabel="calculDate"
+            placeholder="Select a biometry..">
+        </p-dropdown>
+    </div>
+
+    <ng-template #noData>
+        <p>No previous calculation with selected power found</p>
+    </ng-template>
+
+    <!-- Tableau Biometry -->
+    <p-table *ngIf="selectedBiometryTable.length > 0" [value]="selectedBiometryTable" responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>K1</th>
+                <th>K2</th>
+                <th>AL</th>
+                <th>ACD</th>
+                <th>LT</th>
+                <th>CCT</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-exam>
+            <tr>
+                <td>{{ exam.k1 }}</td>
+                <td>{{ exam.k2 }}</td>
+                <td>{{ exam.al }}</td>
+                <td>{{ exam.acd }}</td>
+                <td>{{ exam.lensThickness }}</td>
+                <td>{{ exam.cct }}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- Sélection Calcul -->
+    <div class="flex flex-column md:flex-row align-items-center gap-3 mt-4 mb-4" *ngIf="lightCalcul">
+        <label class="w-full md:w-auto" for="input-metakey">Calcul power selected</label>
+        <p-dropdown
+            class="w-full md:w-20rem"
+            [options]="calculs"
+            [(ngModel)]="lightCalcul"
+            (onChange)="selectCalcul(lightCalcul.id)"
+            optionLabel="createdAt"
+            placeholder="Select a calcul..">
+        </p-dropdown>
+    </div>
+
+    <!-- Tags info calcul -->
+    <div class="flex flex-wrap gap-2 mb-2">
+        <p-tag *ngIf="selectedCalcul" severity="info" [value]="selectedCalcul.lens.lensManufacturer.name"></p-tag>
+        <p-tag *ngIf="selectedCalcul" severity="info" [value]="selectedCalcul.lens.name"></p-tag>
+        <p-tag *ngIf="selectedCalcul" severity="danger">Constant Pearl : {{ AconstantPearl }}</p-tag>
+    </div>
+
+    <!-- Tableau des calculs -->
+    <p-table
+        *ngIf="selectedCalcul && selectedCalcul.valueMatrix.length > 0"
+        [value]="selectedCalcul.valueMatrix"
+        responsiveLayout="scroll">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Power selected</th>
+                <th *ngFor="let formula of selectedCalcul.formulas">
+                    {{ formula }}
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-value>
+            <tr>
+                <td *ngFor="let data of value; let i = index"
+                    [ngStyle]="{ 'font-weight': i === 0 ? 'bold' : 'normal' }">
+                    {{ data !== null ? data : "-" }}
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+
+    <!-- Erreur puissance -->
+    <small *ngIf="powerWrong && lightExam" class="p-error block mt-2">Invalid power, must be between 0..35</small>
+
+    <!-- Champ SE -->
+    <div *ngIf="lightExam" class="field mt-4">
+        <label for="SE">Refraction Spherical (SE)</label>
+        <input
+            pInputText
+            [(ngModel)]="currentCalcul.se"
+            (ngModelChange)="checkSE()"
+            placeholder="Refraction Spherical (SE)"
+            inputId="SE"
+            type="text"
+            appAllowNegative
+            class="w-full md:w-15rem">
+        <small *ngIf="seWrong" class="p-error block">Invalid SE, must be between -9..9</small>
+    </div>
+
+</div>

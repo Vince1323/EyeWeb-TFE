@@ -1,0 +1,117 @@
+<p-messages [(value)]="messages" [enableService]="false"></p-messages>
+
+  <div class="p-fluid p-formgrid grid">
+    <div class="col">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-4">
+                <div
+                        class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                        style="left: -2rem"
+                >
+                    <span
+                            [ngClass]="isMobileDevice ? 'pl-2' : 'pl-4'"
+                            class="font-bold text-xl text-cyan-600"
+                    >OD</span
+                    >
+                </div>
+            </div>
+            <corrective-prescriptions-display></corrective-prescriptions-display>
+            <objective-refraction-display></objective-refraction-display>
+            <keratometry-display></keratometry-display>
+        </div>
+    </div>
+    <div class="col">
+        <div class="card mb-0">
+            <div class="flex justify-content-between mb-4">
+                <div
+                        class="flex align-items-center justify-content-end bg-cyan-100 border-round-right relative p-3"
+                        style="left: -2rem"
+                >
+                    <span
+                            [ngClass]="isMobileDevice ? 'pl-2' : 'pl-4'"
+                            class="font-bold text-xl text-cyan-600"
+                    >OS</span
+                    >
+                </div>
+            </div>
+            <corrective-prescriptions-display></corrective-prescriptions-display>
+            <objective-refraction-display></objective-refraction-display>
+            <keratometry-display></keratometry-display>
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="col">
+        <div class="card mb-0">
+            <subjective-refraction-display></subjective-refraction-display>
+            <ucva-display></ucva-display>
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="col-6">
+        <div class="card mb-0">
+            <specular-display></specular-display>
+            <pentacam-display></pentacam-display>
+            <pupillometry-display></pupillometry-display>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card mb-0">
+            <specular-display></specular-display>
+            <pentacam-display></pentacam-display>
+            <pupillometry-display></pupillometry-display>
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="col">
+        <div class="card mb-0">
+            <dominant-eye-display></dominant-eye-display>
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="col-6">
+        <div class="card mb-0">
+            <eyelid-display></eyelid-display>
+            <lid-margin-display></lid-margin-display>
+            <tear-film-display></tear-film-display>
+            <conjunctiva-display></conjunctiva-display>
+            <cornea-display></cornea-display>
+            <anterior-chamber-display></anterior-chamber-display>
+            <lens-display></lens-display>
+            <vitreous-display></vitreous-display>
+            <retina-display></retina-display>
+            <optic-nerve-display></optic-nerve-display>
+            <remarks-display></remarks-display>
+            <oct-display></oct-display>
+            <dli-display></dli-display>
+        </div>
+    </div>
+    <div class="col-6">
+        <div class="card mb-0">
+            <eyelid-display></eyelid-display>
+            <lid-margin-display></lid-margin-display>
+            <tear-film-display></tear-film-display>
+            <conjunctiva-display></conjunctiva-display>
+            <cornea-display></cornea-display>
+            <anterior-chamber-display></anterior-chamber-display>
+            <lens-display></lens-display>
+            <vitreous-display></vitreous-display>
+            <retina-display></retina-display>
+            <optic-nerve-display></optic-nerve-display>
+            <remarks-display></remarks-display>
+            <oct-display></oct-display>
+            <dli-display></dli-display>
+        </div>
+    </div>
+</div>
+<div class="grid">
+    <div class="col">
+        <div class="card mb-0">
+            <diagnosis-display></diagnosis-display>
+            <conclusion-display></conclusion-display>
+        </div>
+    </div>
+</div>

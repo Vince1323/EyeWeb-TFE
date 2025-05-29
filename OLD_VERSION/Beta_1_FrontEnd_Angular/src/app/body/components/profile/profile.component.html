@@ -1,0 +1,164 @@
+<p-messages [(value)]="messages" [enableService]="false"></p-messages>
+
+<div class="grid" *ngIf="user">
+    <div class="col">
+        <div class="card">
+            <form [formGroup]="userForm" novalidate>
+                <div class="p-fluid p-formgrid grid">
+
+                    <!-- Firstname -->
+                    <div class="field col-12 md:col-6">
+                        <label for="firstname">Firstname</label>
+                        <input pInputText id="firstname" type="text" formControlName="firstname" [readonly]="!isEditMode" />
+                        <small class="p-error" *ngIf="userForm.controls['firstname'].invalid && isEditMode">
+                            Invalid firstname format.
+                        </small>
+                    </div>
+
+                    <!-- Lastname -->
+                    <div class="field col-12 md:col-6">
+                        <label for="lastname">Lastname</label>
+                        <input pInputText id="lastname" type="text" formControlName="lastname" [readonly]="!isEditMode" />
+                        <small class="p-error" *ngIf="userForm.controls['lastname'].invalid && isEditMode">
+                            Invalid lastname format.
+                        </small>
+                    </div>
+
+                    <!-- Email -->
+                    <div class="field col-12 md:col-6">
+                        <label for="email">Email</label>
+                        <input pInputText id="email" type="text" formControlName="email" [readonly]="true" />
+                        <small class="p-error" *ngIf="userForm.controls['email'].invalid && isEditMode">
+                            Invalid email format.
+                        </small>
+                    </div>
+
+                    <!-- Phone -->
+                    <div class="field col-12 md:col-6">
+                        <label for="phone">Phone</label>
+                        <input pInputText id="phone" type="text" formControlName="phone" [readonly]="!isEditMode" />
+                        <small class="p-error" *ngIf="userForm.controls['phone'].invalid && isEditMode">
+                            Invalid phone number format.
+                        </small>
+                    </div>
+
+                    <!-- Address Group -->
+                    <div formGroupName="address" class="grid" style="margin-left: 2px; width: 100%;">
+
+                        <div class="field col-8">
+                            <label for="address">Address</label>
+                            <input pInputText id="address" type="text" formControlName="street" [readonly]="!isEditMode" />
+                            <small class="p-error" *ngIf="userForm.get('address.street')?.invalid && isEditMode">
+                                Address must contain only letters and numbers.
+                            </small>
+                        </div>
+
+                        <div class="field col-2">
+                            <label for="streetNumber">Street Number</label>
+                            <input pInputText id="streetNumber" type="text" formControlName="streetNumber" [readonly]="!isEditMode" />
+                            <small class="p-error" *ngIf="userForm.get('address.streetNumber')?.invalid && isEditMode">
+                                Street number must contain only numbers.
+                            </small>
+                        </div>
+
+                        <div class="field col-2">
+                            <label for="boxNumber">Box Number</label>
+                            <input pInputText id="boxNumber" type="text" formControlName="boxNumber" [readonly]="!isEditMode" />
+                            <small class="p-error" *ngIf="userForm.get('address.boxNumber')?.invalid && isEditMode">
+                                Box number must contain only numbers or letters.
+                            </small>
+                        </div>
+
+                        <div class="field col-2">
+                            <label for="zip">Zip Code</label>
+                            <input pInputText id="zip" type="text" formControlName="zipCode" [readonly]="!isEditMode" />
+                            <small class="p-error" *ngIf="userForm.get('address.zipCode')?.invalid && isEditMode">
+                                Zip code must contain only numbers.
+                            </small>
+                        </div>
+
+                        <div class="field col-5">
+                            <label for="city">City</label>
+                            <input pInputText id="city" type="text" formControlName="city" [readonly]="!isEditMode" />
+                            <small class="p-error" *ngIf="userForm.get('address.city')?.invalid && isEditMode">
+                                City must contain only letters.
+                            </small>
+                        </div>
+
+                        <div class="field col-5">
+                            <label for="country">Country</label>
+                            <input pInputText id="country" type="text" formControlName="country" [readonly]="!isEditMode" />
+                            <small class="p-error" *ngIf="userForm.get('address.country')?.invalid && isEditMode">
+                                Country must contain only letters.
+                            </small>
+                        </div>
+                    </div>
+
+                    <!-- birthDate -->
+                    <div class="field col-12 md:col-6">
+                        <label for="birthDate">birthDate</label>
+                        <p-calendar 
+                            id="birthDate" 
+                            formControlName="birthDate"
+                            [showIcon]="true" 
+                            icon="pi pi-calendar"
+                            dateFormat="yy-mm-dd"
+                            appendTo="body">
+                        </p-calendar>
+                        <small class="p-error" *ngIf="userForm.controls['birthDate'].invalid && isEditMode">
+                            birthDate is required.
+                        </small>
+                    </div>
+
+
+                   <!-- BOUTONS -->
+                   <!-- Conteneur principal des boutons -->
+               <!-- Conteneur principal des boutons -->
+<div class="button-container field col-12 md:col-12">
+     
+    <!-- Mode normal -->
+    
+    <ng-container *ngIf="!isEditMode">
+        <div class="field col-12">
+        <p-button label="Edit" 
+            icon="pi pi-pencil" 
+            (click)="toggleEditMode()" 
+            [style]="{'width': '100%'}">
+        </p-button>
+    </div>
+    </ng-container>
+
+            <!-- Mode édition -->
+            <ng-container *ngIf="isEditMode">
+                <div class="field col-12 md:col-4">
+                <p-button label="Edit" 
+                    icon="pi pi-pencil" 
+                    [disabled]="true" 
+                    [style]="{'flex': '1'}">
+                </p-button>
+            </div>    
+            <div class="field col-12 md:col-4">
+                <p-button label="Save" 
+                    icon="pi pi-save" 
+                    severity="success" 
+                    (click)="updateUser()"
+                    [style]="{'flex': '1'}">
+                </p-button>
+            </div>    
+            <div class="field col-12 md:col-4">    
+                <p-button label="Cancel" 
+                    icon="pi pi-times" 
+                    severity="warning" 
+                    (click)="toggleEditMode()"
+                    [style]="{'flex': '1'}">
+                </p-button>
+            </div>
+            </ng-container>
+       
+        </div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

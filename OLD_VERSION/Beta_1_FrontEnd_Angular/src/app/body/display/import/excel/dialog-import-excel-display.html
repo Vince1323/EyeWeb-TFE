@@ -1,0 +1,61 @@
+<p-dialog [(visible)]="visible" [modal]="true" [style]="{ width: '90vw' }" [draggable]="false" [resizable]="false"
+    (onHide)="onDialogClose()" [maximizable]="true">
+    <ng-template pTemplate="header">
+        <div class="flex justify-content-between mb-4">
+            <div class="flex align-items-center justify-content-end bg-blue-100 border-round-right relative p-3"
+                 style="left: -1.5rem">
+                <span class="font-bold text-xl text-blue-600 pl-4">Import a file</span>
+            </div>
+            <div class="flex align-items-center justify-content-center"></div>
+        </div>
+    </ng-template>
+    <!-- Barre d'étapes -->
+    <div class="m-4">
+        <p-steps [model]="steps" [readonly]="true" [(activeIndex)]="activeStepIndex"></p-steps>
+    </div>
+    <!-- Contenu dynamique basé sur l'étape -->
+    <!-- Étape 1 : Sélection -->
+    <div *ngIf="activeStepIndex === 0" class="grid">
+        <div class="col-6">
+            <p-autoComplete [(ngModel)]="selectedOrganizations" [dropdown]="true" [suggestions]="filteredOrganizations"
+                            [forceSelection]="true" [style]="{ width: '100%' }" [multiple]="true"
+                            (completeMethod)="filterOrganization($event)" field="name" appendTo="body"></p-autoComplete>
+        </div>
+        <div class="col-6">
+            <p-autoComplete [(ngModel)]="selectedBiometer" [dropdown]="true" [suggestions]="filteredBiometers"
+                            [forceSelection]="true" [style]="{ width: '100%' }"
+                            (completeMethod)="filterBiometer($event)" field="name" appendTo="body"></p-autoComplete>
+        </div>
+        <div class="col">
+            <p-fileUpload
+                name="upload"
+                (onSelect)="onUpload($event)"
+                [multiple]="true"
+                [disabled]="!selectedBiometer || selectedOrganizations.length === 0"
+                accept="{{ typeImport }}"
+                [maxFileSize]="5242880">
+                <ng-template pTemplate="content">
+                    <ul *ngIf="uploadedFiles.length">
+                        <li *ngFor="let file of uploadedFiles">
+                            {{ file.name }} - {{ file.size }} bytes
+                        </li>
+                    </ul>
+                </ng-template>
+            </p-fileUpload>
+        </div>
+    </div>
+
+    <!-- Étape 2 : Chargement -->
+    <div *ngIf="activeStepIndex === 1" class="col">
+        <p-progressBar *ngIf="activeStepIndex === 1 && isUploading" mode="indeterminate" [style]="{ height: '10px', margin: '1em' }"></p-progressBar>
+        <p-panel header="Import logs" [toggleable]="true">
+            <p-scrollPanel #scrollPanelRef [style]="{ width: '100%', height: '200px' }" 
+                styleClass="custom-scroll-panel">
+                <ul class="log-list">
+                    <li *ngFor="let log of logs" class="log-item">{{ log }}</li>
+                </ul>
+            </p-scrollPanel>
+        </p-panel>
+    </div>
+</p-dialog>
+

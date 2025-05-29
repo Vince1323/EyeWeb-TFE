@@ -1,0 +1,74 @@
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>
+
+<div class="grid" *ngIf="patient">
+  <div class="col">
+    <div class="card mb-0">
+      <div class="p-fluid p-formgrid grid">
+          
+
+          
+        <!-- Informations générales -->
+        <div class="field col-12 md:col-4">
+          <label for="surgeryDate">Surgery Date</label>
+          <p-calendar id="surgeryDate" [(ngModel)]="planning.surgeryDate" [showIcon]="true" [disabled]="!isEditMode"></p-calendar>
+        </div>
+
+        <div class="field col-12 md:col-4">
+          <label for="anesthesia">Anesthesia Type</label>
+          <p-dropdown id="anesthesia" [options]="anesthesiaOptions" [(ngModel)]="planning.anesthesia" placeholder="Select"
+                      [disabled]="!isEditMode"></p-dropdown>
+        </div>
+
+        <div class="field col-12 md:col-4">
+          <label for="surgeryType">Surgery Type</label>
+          <p-dropdown id="surgeryType" [options]="surgeryTypeOptions" [(ngModel)]="planning.surgeryType" placeholder="Select"
+                      [disabled]="!isEditMode"></p-dropdown>
+        </div>
+
+        <!-- OD Section -->
+        <div class="field col-12 md:col-6">
+          <div class="section-box">
+            <label class="section-label font-bold text-cyan-700">OD - Right Eye</label>
+            <textarea pInputTextarea rows="4" [(ngModel)]="planning.notesOD" [disabled]="!isEditMode"
+                      placeholder="Preparation instructions, materials, remarks for OD..."></textarea>
+          </div>
+        </div>
+
+        <!-- OS Section -->
+        <div class="field col-12 md:col-6">
+          <div class="section-box">
+            <label class="section-label font-bold text-cyan-700">OS - Left Eye</label>
+            <textarea pInputTextarea rows="4" [(ngModel)]="planning.notesOS" [disabled]="!isEditMode"
+                      placeholder="Preparation instructions, materials, remarks for OS..."></textarea>
+          </div>
+        </div>
+
+        <!-- Global Comment -->
+        <div class="field col-12">
+          <label for="generalComment">General Comment</label>
+          <textarea pInputTextarea id="generalComment" rows="3" [(ngModel)]="planning.comment" [disabled]="!isEditMode"></textarea>
+        </div>
+
+        <!-- Boutons -->
+        <div class="field col-12">
+          <ng-container *ngIf="!isEditMode">
+            <p-button label="Edit" icon="pi pi-pencil" (click)="toggleEditMode()" class="w-full"></p-button>
+          </ng-container>
+
+          <ng-container *ngIf="isEditMode">
+            <div class="grid">
+              <div class="col-6">
+                <p-button label="Save" icon="pi pi-save" severity="success" (click)="save()" class="w-full"></p-button>
+              </div>
+              <div class="col-6">
+                <p-button label="Cancel" icon="pi pi-times" severity="warning" (click)="toggleEditMode()" class="w-full"></p-button>
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

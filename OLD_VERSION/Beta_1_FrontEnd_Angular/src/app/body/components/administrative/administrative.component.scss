@@ -1,0 +1,12 @@
+.button-container {
+    display: flex;
+    justify-content: center; /* Centre les boutons */
+    width: 100%;
+    padding: 10px 0; /* Ajuste l'espace en haut et en bas */
+    flex-wrap: wrap; 
+}
+
+.button-container p-button {
+    flex: 0 1 200px; /* Fixe une largeur aux boutons tout en étant responsive */
+    max-width: 200px; /* Empêche les boutons de s'étirer trop */
+}

@@ -1,0 +1,46 @@
+
+<div class="layout-topbar justify-content-between flex items-center px-4 py-2">
+  <!-- Start -->
+  <div class="topbar-start flex items-center gap-3">
+    <button
+      #menubutton
+      type="button"
+      class="topbar-menubutton p-link p-trigger"
+      (click)="onMenuButtonClick()"
+    >
+      <i class="pi pi-bars"></i>
+    </button>
+
+    <app-breadcrumb class="topbar-breadcrumb"></app-breadcrumb>
+  </div>
+
+  <!-- Center (Patient info) -->
+  <div *ngIf="patientInfo" class="topbar-center text-center flex-1">
+    <span class="text-xl font-light">
+      <strong> {{ patientInfo }}</strong> 
+    </span>
+  </div>
+
+  <!-- End -->
+  <div class="topbar-end flex items-center gap-4">
+    <div *ngIf="userName" class="text-right mr-2">
+      <div class="text-base font-medium ">{{ userName }}</div>
+      <div class="text-sm italic">({{ userRole }})</div>
+    </div>
+
+    <button class="p-link layout-topbar-button" (click)="changeTheme()">
+      <i class="pi pi-moon" *ngIf="!darkTheme"></i>
+      <i class="pi pi-sun" *ngIf="darkTheme"></i>
+    </button>
+
+    <button type="button" class="p-link layout-topbar-button" (click)="onProfileButtonClick()">
+      <i class="pi pi-user"></i>
+    </button>
+
+    <button type="button" class="p-link layout-topbar-button" (click)="logout()" title="Logout">
+      <i class="pi pi-sign-out"></i>
+    </button>
+  </div>
+</div>
+<p-confirmDialog></p-confirmDialog>
+<p-toast></p-toast>
