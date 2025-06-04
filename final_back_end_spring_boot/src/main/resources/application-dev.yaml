@@ -1,0 +1,67 @@
+spring:
+  config:
+    import: file:.env[.properties]
+  datasource:
+    url: jdbc:postgresql://localhost:5432/EyeAppV3
+    username: postgres
+    password: Vinyjeff
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  mail:
+    host: ${SPRING_EMAIL_HOST}
+    username: ${SPRING_EMAIL_USERNAME}
+    password: ${SPRING_EMAIL_PASSWORD}
+    port: ${SPRING_EMAIL_PORT}
+    properties:
+      mail:
+        smtp:
+          port: ${SPRING_EMAIL_PORT}
+          transport:
+            protocol: smtps
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          ssl:
+            enable: false
+          timeout: 15000
+          connectiontimeout: 15000
+          socketFactory:
+            fallback: true
+        debug: false
+        pop3:
+          host: popemailaddress
+          port: 110
+          starttls:
+            enable: true
+          store: pop3s
+      pop:
+        pop3:
+          username: ${SPRING_EMAIL_USERNAME}
+          password: ${SPRING_EMAIL_PASSWORD}
+          folder: INBOX
+
+application:
+  security:
+    jwt:
+      secret-key: ${SECRETKEY}
+      expiration: 86400000
+  mailing:
+    frontend:
+      activation-url: http://localhost:4200/activate-account
+
+api:
+  username: ${PEARL_API_USERNAME}
+  password: ${PEARL_API_PASSWORD}
